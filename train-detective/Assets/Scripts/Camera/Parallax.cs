@@ -8,10 +8,6 @@ public class Parallax : MonoBehaviour
     public GameObject cam;
     public float parallaxEffect;
 
-    private void Awake() {
-        cam = Camera.main.gameObject;
-    }
-
     void Start() {
         startpos = transform.position.x;
         length = GetComponent<SpriteRenderer>().bounds.size.x;
