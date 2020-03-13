@@ -5,19 +5,19 @@ using Yarn.Unity;
 
 public class PlayerController : MonoBehaviour {
 
-    public GameObject[] arrows;
-
     private Rigidbody2D _rigidBody;
     [SerializeField] private bool _facingRight = true;
 
     private Vector3 _velocity = Vector3.zero;
-    private float _movementSmoothing = 0.5f;
+    public float _movementSmoothing = 0f;
 
     private float _rayLength = 1f;
     private float _rayOffset = 0.5f;
     private int _rayLayerMask;
 
     public float interactionRadius = 2.0f;
+
+    public Animator _animator;
 
 
     private void Awake() {
@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour {
     public void Move(float move) {
 
         Vector3 targetVelocity = new Vector2(move * 10f, _rigidBody.velocity.y);
+
+        _animator.SetFloat("Speed", Mathf.Abs(move));
 
         _rigidBody.velocity = Vector3.SmoothDamp(_rigidBody.velocity, targetVelocity, ref _velocity, _movementSmoothing);
 

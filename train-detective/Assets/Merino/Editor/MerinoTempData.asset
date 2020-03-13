@@ -16,9 +16,9 @@ MonoBehaviour:
   timestamp: 1203.2191698000001
   viewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 070000000b000000
-    m_LastClickedID: 7
-    m_ExpandedIDs: 000000000100000006000000
+    m_SelectedIDs: 0c000000
+    m_LastClickedID: 12
+    m_ExpandedIDs: 0000000001000000060000000b000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -39,8 +39,8 @@ MonoBehaviour:
   currentFiles:
   - {fileID: 4900000, guid: 8b6ae1e8d32e840f0b3fd0b033e52253, type: 3}
   - {fileID: 4900000, guid: 6ca9ce95dec45954da1189f58879a655, type: 3}
-  dirtyFiles:
-  - {fileID: 4900000, guid: 6ca9ce95dec45954da1189f58879a655, type: 3}
+  - {fileID: 4900000, guid: 24f22b038d584445ba4f43344cc5733d, type: 3}
+  dirtyFiles: []
   treeElements:
   - m_ID: 0
     m_Name: Root
@@ -127,7 +127,7 @@ MonoBehaviour:
     nodePosition: {x: 0, y: 0}
     cachedParentID: 6
     cachedSize: 0
-  - m_ID: 9
+  - m_ID: 8
     m_Name: Hat.Watch
     m_Depth: 1
     nodeTags: 
@@ -139,7 +139,7 @@ MonoBehaviour:
     nodePosition: {x: 0, y: 0}
     cachedParentID: 6
     cachedSize: 0
-  - m_ID: 10
+  - m_ID: 9
     m_Name: Hat.Exit
     m_Depth: 1
     nodeTags: 
@@ -148,7 +148,7 @@ MonoBehaviour:
     nodePosition: {x: 0, y: 0}
     cachedParentID: 6
     cachedSize: 0
-  - m_ID: 11
+  - m_ID: 10
     m_Name: Hat.Sorry
     m_Depth: 1
     nodeTags: 
@@ -156,4 +156,32 @@ MonoBehaviour:
     leafType: 0
     nodePosition: {x: 0, y: 0}
     cachedParentID: 6
+    cachedSize: 0
+  - m_ID: 11
+    m_Name: Ship.yarn
+    m_Depth: 0
+    nodeTags: 
+    nodeBody: 
+    leafType: 1
+    nodePosition: {x: 0, y: 0}
+    cachedParentID: -1
+    cachedSize: 0
+  - m_ID: 12
+    m_Name: Ship
+    m_Depth: 1
+    nodeTags: 
+    nodeBody: "<<if visited(\"Ship\") is false>>\n    Ship: Hey, friend.\n    Player:
+      Hi, Ship.\n    Player: How's space?\n    Ship: Oh, man.\n    <<setsprite ShipFace
+      happy>>\n        Ship: It's HUGE!\n    <<setsprite ShipFace neutral>>\n<<else>>\n   
+      <<setsprite ShipFace happy>>\n        Ship: Hey!!\n    <<setsprite ShipFace
+      neutral>>\n<<endif>>\n\n<<if $should_see_ship is true and $sally_warning is
+      false>>\n    Player: Sally said you wanted to see me?\n    <<setsprite ShipFace
+      happy>>\n    Ship: She totally did!!\n    <<setsprite ShipFace neutral>>\n   
+      Ship: She wanted me to tell you...\n    Ship: If you ever go off-watch without
+      resetting the console again...\n    <<setsprite ShipFace happy>>\n    Ship:
+      She'll flay you alive!\n    <<set $sally_warning to true>>\n    Player: Uh.\n   
+      <<setsprite ShipFace neutral>>\n<<endif>>"
+    leafType: 0
+    nodePosition: {x: 721, y: 130}
+    cachedParentID: 11
     cachedSize: 0

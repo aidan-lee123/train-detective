@@ -1,7 +1,9 @@
+
 title: Ship
 tags: 
 colorID: 0
 position: 721,130
+parent: 
 ---
 <<if visited("Ship") is false>>
     Ship: Hey, friend.
