@@ -7,21 +7,31 @@ public class Door : Interactable
     public GameObject arrow;
     public GameObject link;
     public Collider2D bounds;
+    public float _rayLength = 2f;
+    public List<GameObject> _actors = new List<GameObject>();
 
-    private void OnTriggerStay2D(Collider2D collision) {
+    private void Update() {
         if (Input.GetKeyDown(KeyCode.E)) {
 
             Debug.Log("E Pressed");
-            MoveCharacter(collision.gameObject);
+            foreach(GameObject actor in _actors) {
+                if(actor.layer == 9) {
+                    MoveCharacter(actor);
+                }
+            }
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
         DisplayArrow();
+        _actors.Add(collision.gameObject);
+        Debug.Log(collision.gameObject.name + " entered " + gameObject.name);
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
         HideArrow();
+        _actors.Remove(collision.gameObject);
+        Debug.Log(collision.gameObject.name + " left " + gameObject.name);
     }
 
     public void DisplayArrow() {
@@ -39,6 +49,9 @@ public class Door : Interactable
         //StartCoroutine(DelayCinemachine(0.08f));
 
     }
+
+
+
 
     IEnumerator DelayCinemachine(float seconds) {
         yield return new WaitForSeconds(seconds);

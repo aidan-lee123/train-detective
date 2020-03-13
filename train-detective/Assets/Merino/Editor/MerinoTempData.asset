@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: MerinoTempData
   m_EditorClassIdentifier: 
   editedID: 7
-  timestamp: 1203.2191698000001
+  timestamp: 7024.3613939
   viewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 0c000000
-    m_LastClickedID: 12
+    m_SelectedIDs: 07000000
+    m_LastClickedID: 7
     m_ExpandedIDs: 0000000001000000060000000b000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
