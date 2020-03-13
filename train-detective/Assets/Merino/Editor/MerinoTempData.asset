@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13981b66f67204744891820795ef4230, type: 3}
   m_Name: MerinoTempData
   m_EditorClassIdentifier: 
-  editedID: 2
-  timestamp: 8218.3544077
+  editedID: 7
+  timestamp: 1203.2191698000001
   viewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 03000000
-    m_LastClickedID: 2
-    m_ExpandedIDs: 0000000001000000
+    m_SelectedIDs: 070000000b000000
+    m_LastClickedID: 7
+    m_ExpandedIDs: 000000000100000006000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -37,8 +37,10 @@ MonoBehaviour:
       m_ClientGUIView: {fileID: 0}
     m_SearchString: 
   currentFiles:
-  - {fileID: 4900000, guid: fc7b50386f57fee4abfe763e05a4c6e6, type: 3}
-  dirtyFiles: []
+  - {fileID: 4900000, guid: 8b6ae1e8d32e840f0b3fd0b033e52253, type: 3}
+  - {fileID: 4900000, guid: 6ca9ce95dec45954da1189f58879a655, type: 3}
+  dirtyFiles:
+  - {fileID: 4900000, guid: 6ca9ce95dec45954da1189f58879a655, type: 3}
   treeElements:
   - m_ID: 0
     m_Name: Root
@@ -50,7 +52,7 @@ MonoBehaviour:
     cachedParentID: -1
     cachedSize: 0
   - m_ID: 1
-    m_Name: NewYarnFile.yarn
+    m_Name: Sally.yarn
     m_Depth: 0
     nodeTags: 
     nodeBody: 
@@ -59,57 +61,99 @@ MonoBehaviour:
     cachedParentID: -1
     cachedSize: 0
   - m_ID: 2
-    m_Name: Start
+    m_Name: Sally
     m_Depth: 1
     nodeTags: 
-    nodeBody: 'This is the Start node. Write the beginning of your Yarn story here.
-
-      // You can make comments with ''//'' and the player won''t see it.
-
-
-      // There''s two ways to do choices in Yarn. The most basic way is to link to
-      other nodes like this:
-
-      [[Go see more examples|Start_MoreExamples]]
-
-      [[Actually, let''s restart this node again|Start]]
-
-
-      Does this work OK? OK
-
-
-      // IMPORTANT: node options are only offered at the end of the passage
-
-      Do you want to read more about Yarn features?'
+    nodeBody: "<<if visited(\"Sally\") is false>>\n    Player: Hey, Sally.\n    Sally:
+      Oh! Hi.\n    Sally: You snuck up on me.\n    Sally: Don't do that.\n<<else>>\n   
+      Player: Hey.\n    Sally: Hi.\n<<endif>>\n\n<<if not visited(\"Sally.Watch\")>>\n   
+      [[Anything exciting happen on your watch?|Sally.Watch]]\n<<endif>>\n\n<<if
+      $sally_warning and not visited(\"Sally.Sorry\")>>\n    [[Sorry about the console.|Sally.Sorry]]\n<<endif>>\n[[See
+      you later.|Sally.Exit]]"
     leafType: 0
-    nodePosition: {x: -65, y: -550}
+    nodePosition: {x: 524, y: 111}
     cachedParentID: 1
-    cachedSize: 100
+    cachedSize: 0
   - m_ID: 3
-    m_Name: Start_MoreExamples
+    m_Name: Sally.Watch
     m_Depth: 1
     nodeTags: 
-    nodeBody: "This node is called Start_MoreExamples.\nThe second way to do choices
-      in Yarn is with 'shortcut options' like this:\n\n->This is option 1\n\tYou selected
-      option 1.\n->This is option 2\n\tYou selected option 2.\n\t<<set $didOption2
-      to true>>\n\nBased on choices, you can set variables, and then check those variables
-      later.\n<<if $didOption2 is true>>\nBy checking $didOption2, I remember you
-      chose option 2!\n<<else>>\nI can't detect a variable $didOption2, so that means
-      you chose option 1\n<<endif>>\n\nDo you want to go back to Start now?\n-> Yes,
-      send me back to Start.\n\t[[Start]]\n-> No thanks, I want to stop.\n\nOk here's
-      the end, good luck!\n[[Go to NewNode4|NewNode4]]"
+    nodeBody: "Sally: Not really. \nSally: Same old nebula, doing the same old thing.\nSally:
+      Oh, Ship wanted to see you. Go say hi to it.\n<<set $should_see_ship to true>>\n<<if
+      visited(\"Ship\") is true>>\n    Player: Already done!\n    Sally: Go say hi
+      again.\n<<endif>>"
     leafType: 0
-    nodePosition: {x: 300, y: -593}
+    nodePosition: {x: 512, y: 430}
     cachedParentID: 1
-    cachedSize: 125
+    cachedSize: 0
   - m_ID: 4
-    m_Name: NewNode4
+    m_Name: Sally.Exit
     m_Depth: 1
     nodeTags: 
-    nodeBody: 'Write here.
-
-'
+    nodeBody: 'Sally: Bye.'
     leafType: 0
-    nodePosition: {x: 134, y: -420}
+    nodePosition: {x: 211, y: 417}
     cachedParentID: 1
-    cachedSize: 100
+    cachedSize: 0
+  - m_ID: 5
+    m_Name: Sally.Sorry
+    m_Depth: 1
+    nodeTags: 
+    nodeBody: 'Sally: Yeah. Don''t do it again.'
+    leafType: 0
+    nodePosition: {x: 827, y: 439}
+    cachedParentID: 1
+    cachedSize: 0
+  - m_ID: 6
+    m_Name: Hat.yarn
+    m_Depth: 0
+    nodeTags: 
+    nodeBody: 
+    leafType: 1
+    nodePosition: {x: 0, y: 0}
+    cachedParentID: -1
+    cachedSize: 0
+  - m_ID: 7
+    m_Name: Hat
+    m_Depth: 1
+    nodeTags: 
+    nodeBody: "<<if visited(\"Hat\") is false>>\n    Player: Hey, Sally.\n    Hat:
+      Oh! Hi.\n    Hat: You snuck up on me.\n    Hat: Don't do that.\n<<else>>\n   
+      Player: Hey.\n    Hat: Hi.\n<<endif>>\n\n<<if not visited(\"Hat.Watch\")>>\n   
+      [[Anything exciting happen on your watch?|Hat.Watch]]\n<<endif>>\n\n<<if $hat_warning
+      and not visited(\"Hat.Sorry\")>>\n    [[Sorry about the console.|Hat.Sorry]]\n<<endif>>\n[[See
+      you later.|Hat.Exit]]"
+    leafType: 0
+    nodePosition: {x: 0, y: 0}
+    cachedParentID: 6
+    cachedSize: 0
+  - m_ID: 9
+    m_Name: Hat.Watch
+    m_Depth: 1
+    nodeTags: 
+    nodeBody: "Hat: Not really. \nHat: Same old nebula, doing the same old thing.\nHat:
+      Oh, Ship wanted to see you. Go say hi to it.\n<<set $should_see_ship to true>>\n<<if
+      visited(\"Ship\") is true>>\n    Player: Already done!\n    Hat: Go say hi
+      again.\n<<endif>>"
+    leafType: 0
+    nodePosition: {x: 0, y: 0}
+    cachedParentID: 6
+    cachedSize: 0
+  - m_ID: 10
+    m_Name: Hat.Exit
+    m_Depth: 1
+    nodeTags: 
+    nodeBody: 'Hat: Bye'
+    leafType: 0
+    nodePosition: {x: 0, y: 0}
+    cachedParentID: 6
+    cachedSize: 0
+  - m_ID: 11
+    m_Name: Hat.Sorry
+    m_Depth: 1
+    nodeTags: 
+    nodeBody: 'Hat: Don''t do it again'
+    leafType: 0
+    nodePosition: {x: 0, y: 0}
+    cachedParentID: 6
+    cachedSize: 0

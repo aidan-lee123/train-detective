@@ -19,7 +19,9 @@ public class PlayerMovement : MonoBehaviour
     private void Update() {
         _horizontalMove = Input.GetAxisRaw("Horizontal") * _runSpeed;
 
-
+        if (Input.GetKeyDown(KeyCode.E)) {
+            _controller.CheckForNearbyNPC();
+        }
 
          /* OBSOLETE
         if(_controller.CheckForward() != null)
