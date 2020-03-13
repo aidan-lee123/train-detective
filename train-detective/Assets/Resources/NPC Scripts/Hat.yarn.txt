@@ -1,8 +1,8 @@
 
-title: Hat
+title: Woman
 tags: 
 colorID: 0
-position: 0,0
+position: 36,12
 parent: 
 ---
 <<if visited("Hat") is false>>
@@ -27,7 +27,7 @@ parent:
 title: Hat.Watch
 tags: 
 colorID: 0
-position: 0,0
+position: 44,-185
 parent: 
 ---
 Hat: Not really. 
@@ -42,7 +42,7 @@ Hat: Oh, Ship wanted to see you. Go say hi to it.
 title: Hat.Exit
 tags: 
 colorID: 0
-position: 0,0
+position: -111,146
 parent: 
 ---
 Hat: Bye
@@ -50,7 +50,7 @@ Hat: Bye
 title: Hat.Sorry
 tags: 
 colorID: 0
-position: 0,0
+position: -130,-140
 parent: 
 ---
 Hat: Don't do it again

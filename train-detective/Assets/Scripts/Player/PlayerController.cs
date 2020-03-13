@@ -94,8 +94,8 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void CheckForNearbyNPC() {
-        var allParticipants = new List<NPCInfo>(FindObjectsOfType<NPCInfo>());
-        var target = allParticipants.Find(delegate (NPCInfo p) {
+        var allParticipants = new List<NPC>(FindObjectsOfType<NPC>());
+        var target = allParticipants.Find(delegate (NPC p) {
             return string.IsNullOrEmpty(p.talkToNode) == false && // has a conversation node?
             (p.transform.position - this.transform.position)// is in range?
             .magnitude <= interactionRadius;

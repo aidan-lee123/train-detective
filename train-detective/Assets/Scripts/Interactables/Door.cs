@@ -10,10 +10,16 @@ public class Door : Interactable
     public float _rayLength = 2f;
     public List<GameObject> _actors = new List<GameObject>();
 
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.E)) {
+    private void OnDrawGizmos() {
+        if(link != null)
+            Gizmos.DrawLine(transform.position, link.transform.position);
+    }
 
-            Debug.Log("E Pressed");
+    private void Update() {
+
+        
+
+        if (Input.GetKeyDown(KeyCode.E)) {
             foreach(GameObject actor in _actors) {
                 if(actor.layer == 9) {
                     MoveCharacter(actor);
@@ -43,7 +49,13 @@ public class Door : Interactable
     }
 
     public void MoveCharacter(GameObject character) {
-        character.transform.position = new Vector2(link.transform.position.x, character.transform.position.y);
+        if(link != null) {
+            character.transform.position = new Vector2(link.transform.position.x, character.transform.position.y);
+        }
+        else {
+            Debug.Log("Assign a link to this door!");
+        }
+        
         //CameraController.Instance.DisableConfines();
 
         //StartCoroutine(DelayCinemachine(0.08f));
