@@ -12,7 +12,7 @@ public class PatrolState : BaseState {
     private Vector3 _velocity = Vector3.zero;
     private float _movementSmoothing = 0f;
 
-    private int _destPoint = 0;
+    //private int _destPoint = 0;
     private Transform[] _patrolPoints;
     private Rigidbody2D _rigidBody;
 

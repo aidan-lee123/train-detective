@@ -19,11 +19,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update() {
 
-        // Remove all player control when we're in dialogue
-        if (FindObjectOfType<DialogueRunner>().isDialogueRunning == true) {
-            return;
-        }
-
         _horizontalMove = Input.GetAxisRaw("Horizontal") * _runSpeed;
 
         if (Input.GetKeyDown(KeyCode.E)) {

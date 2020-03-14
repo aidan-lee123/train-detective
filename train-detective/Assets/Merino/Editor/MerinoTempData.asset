@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MerinoTempData
   m_EditorClassIdentifier: 
   editedID: 7
-  timestamp: 20720.912509799997
+  timestamp: 30982.2604352
   viewState:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 07000000
@@ -40,7 +40,8 @@ MonoBehaviour:
   - {fileID: 4900000, guid: 8b6ae1e8d32e840f0b3fd0b033e52253, type: 3}
   - {fileID: 4900000, guid: 6ca9ce95dec45954da1189f58879a655, type: 3}
   - {fileID: 4900000, guid: 24f22b038d584445ba4f43344cc5733d, type: 3}
-  dirtyFiles: []
+  dirtyFiles:
+  - {fileID: 4900000, guid: 6ca9ce95dec45954da1189f58879a655, type: 3}
   treeElements:
   - m_ID: 0
     m_Name: Root
@@ -105,7 +106,7 @@ MonoBehaviour:
     cachedParentID: 1
     cachedSize: 0
   - m_ID: 6
-    m_Name: Hat.yarn
+    m_Name: Woman.yarn
     m_Depth: 0
     nodeTags: 
     nodeBody: 
@@ -117,46 +118,46 @@ MonoBehaviour:
     m_Name: Woman
     m_Depth: 1
     nodeTags: 
-    nodeBody: "<<if visited(\"Hat\") is false>>\n    Player: Hey, Sally.\n    Hat:
-      Oh! Hi.\n    Hat: You snuck up on me.\n    Hat: Don't do that.\n<<else>>\n   
-      Player: Hey.\n    Hat: Hi.\n<<endif>>\n\n<<if not visited(\"Hat.Watch\")>>\n   
-      [[Anything exciting happen on your watch?|Hat.Watch]]\n<<endif>>\n\n<<if $hat_warning
-      and not visited(\"Hat.Sorry\")>>\n    [[Sorry about the console.|Hat.Sorry]]\n<<endif>>\n[[See
-      you later.|Hat.Exit]]"
+    nodeBody: "<<if visited(\"Woman\") is false>>\n    Player: Hey, Sally.\n    Woman:
+      Oh! Hi.\n    Woman: You snuck up on me.\n    Woman: Don't do that.\n<<else>>\n   
+      Player: Hey.\n    Woman: Hi.\n<<endif>>\n\n<<if not visited(\"Woman.Watch\")>>\n   
+      [[Anything exciting happen on your watch?|Woman.Watch]]\n<<endif>>\n\n<<if
+      $woman_warning and not visited(\"Woman.Sorry\")>>\n    [[Sorry about the console.|Woman.Sorry]]\n<<endif>>\n[[See
+      you later.|Woman.Exit]]"
     leafType: 0
     nodePosition: {x: 36, y: 12}
     cachedParentID: 6
-    cachedSize: 100
+    cachedSize: 0
   - m_ID: 8
-    m_Name: Hat.Watch
+    m_Name: Woman.Watch
     m_Depth: 1
     nodeTags: 
-    nodeBody: "Hat: Not really. \nHat: Same old nebula, doing the same old thing.\nHat:
+    nodeBody: "Woman: Not really. \nWoman: Same old nebula, doing the same old thing.\nWoman:
       Oh, Ship wanted to see you. Go say hi to it.\n<<set $should_see_ship to true>>\n<<if
-      visited(\"Ship\") is true>>\n    Player: Already done!\n    Hat: Go say hi
+      visited(\"Ship\") is true>>\n    Player: Already done!\n    Woman Go say hi
       again.\n<<endif>>"
     leafType: 0
     nodePosition: {x: 44, y: -185}
     cachedParentID: 6
-    cachedSize: 100
+    cachedSize: 0
   - m_ID: 9
-    m_Name: Hat.Exit
+    m_Name: Woman.Exit
     m_Depth: 1
     nodeTags: 
-    nodeBody: 'Hat: Bye'
+    nodeBody: 'Woman: Bye'
     leafType: 0
     nodePosition: {x: -111, y: 146}
     cachedParentID: 6
-    cachedSize: 100
+    cachedSize: 0
   - m_ID: 10
-    m_Name: Hat.Sorry
+    m_Name: Woman.Sorry
     m_Depth: 1
     nodeTags: 
-    nodeBody: 'Hat: Don''t do it again'
+    nodeBody: 'Woman: Don''t do it again'
     leafType: 0
     nodePosition: {x: -130, y: -140}
     cachedParentID: 6
-    cachedSize: 100
+    cachedSize: 0
   - m_ID: 11
     m_Name: Ship.yarn
     m_Depth: 0

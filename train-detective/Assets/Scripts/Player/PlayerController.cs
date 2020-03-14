@@ -57,9 +57,17 @@ public class PlayerController : MonoBehaviour {
     private void Flip() {
         _facingRight = !_facingRight;
 
+        if (_facingRight == true) {
+            transform.eulerAngles = new Vector3(0, -180, 0);
+        }
+        else {
+            transform.eulerAngles = new Vector3(0, 0, 0);
+        
+        }
+        /*
         Vector3 scale = transform.localScale;
         scale.x *= -1;
-        transform.localScale = scale;
+        transform.localScale = scale;*/
     }
 
     public GameObject CheckForward() {
