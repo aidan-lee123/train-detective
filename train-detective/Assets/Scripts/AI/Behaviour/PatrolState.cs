@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
+using Yarn.Unity;
 
 public class PatrolState : BaseState {
     private Vector2 _destination;
@@ -24,6 +26,7 @@ public class PatrolState : BaseState {
         _patrolPoints = _npc.GetPoints();
         _rigidBody = npc.GetComponent<Rigidbody2D>();
         _animator = npc.GetComponent<Animator>();
+
     }
 
     public override Type Tick() {
@@ -34,6 +37,11 @@ public class PatrolState : BaseState {
         //Does it have a Destination
         //No Give it one
         //transform.Translate(Vector2.right * _npc.Speed * Time.deltaTime);
+
+        // Remove all player control when we're in dialogue
+        
+
+
         Move();
         CheckForward();
 
@@ -44,12 +52,22 @@ public class PatrolState : BaseState {
     private void Move() {
 
         //Vector2 dir = transform.position - destination.transform.position;
-        _animator.SetFloat("Speed", 0.1f);
+        
+        Vector2 targetVelocity = Vector2.right * _npc.Speed;
 
-        if(_facingRight)
-            _rigidBody.velocity = Vector3.SmoothDamp(_rigidBody.velocity, Vector2.right * _npc.Speed, ref _velocity, _movementSmoothing);
+        if (!_facingRight)
+            targetVelocity = Vector2.left * _npc.Speed;
+
+        if (_npc.DialogueRunner.isDialogueRunning == true) {
+            targetVelocity = Vector3.zero;
+        }
+
+        _animator.SetFloat("Speed", Mathf.Abs(targetVelocity.x));
+
+        if (_facingRight)
+            _rigidBody.velocity = Vector3.SmoothDamp(_rigidBody.velocity, targetVelocity, ref _velocity, _movementSmoothing);
         else
-            _rigidBody.velocity = Vector3.SmoothDamp(_rigidBody.velocity, Vector2.left * _npc.Speed, ref _velocity, _movementSmoothing);
+            _rigidBody.velocity = Vector3.SmoothDamp(_rigidBody.velocity, targetVelocity, ref _velocity, _movementSmoothing);
     }
 
 

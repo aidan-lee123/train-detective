@@ -26,10 +26,22 @@ public class PlayerController : MonoBehaviour {
         _rayLayerMask = 8;
     }
 
+    private void Update() {
+        // Remove all player control when we're in dialogue
+        if (FindObjectOfType<DialogueRunner>().isDialogueRunning == true) {
+            Move(0);
+            return;
+        }
+
+    }
+
     public void Move(float move) {
 
         Vector3 targetVelocity = new Vector2(move * 10f, _rigidBody.velocity.y);
 
+        if (FindObjectOfType<DialogueRunner>().isDialogueRunning == true) {
+            targetVelocity = Vector3.zero;
+        }
         _animator.SetFloat("Speed", Mathf.Abs(move));
 
         _rigidBody.velocity = Vector3.SmoothDamp(_rigidBody.velocity, targetVelocity, ref _velocity, _movementSmoothing);

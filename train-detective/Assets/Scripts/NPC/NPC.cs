@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Yarn.Unity;
 
 public class NPC : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class NPC : MonoBehaviour
 
 
     public Transform[] Points;
+    public DialogueRunner DialogueRunner => FindObjectOfType<DialogueRunner>();
 
 
     public void Awake() {
@@ -38,8 +40,12 @@ public class NPC : MonoBehaviour
         InitializeStateMachine();
 
         if (scriptToLoad != null) {
-            FindObjectOfType<Yarn.Unity.DialogueRunner>().AddScript(scriptToLoad);
+            DialogueRunner.AddScript(scriptToLoad);
         }
+    }
+
+    private void Update() {
+
     }
 
     private void InitializeStateMachine() {
