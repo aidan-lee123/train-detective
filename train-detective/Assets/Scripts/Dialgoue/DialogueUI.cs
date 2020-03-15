@@ -50,6 +50,8 @@ namespace Yarn.Unity.Example {
         /// dialogue is active and to restore them when dialogue ends
         public RectTransform gameControlsContainer;
 
+        public float containerHeight;
+
         void Awake() {
             // Start by hiding the container, line and option buttons
             if (dialogueContainer != null)
@@ -70,21 +72,23 @@ namespace Yarn.Unity.Example {
             //foreach(GameObject )
         }
 
+        //Find all Gameobjects with tag "NPC" and add it to the dictionary
         public void FindNPCs(GameObject root) {
             string remove = "NPC_";
-
-            foreach (Transform t in root.transform.GetComponentsInChildren(typeof(GameObject), true)) {
+            GameObject[] npcs = GameObject.FindGameObjectsWithTag("NPC");
+            foreach (GameObject g in npcs) {
 
                 var stringBuilder = new StringBuilder();
 
-                if (t.gameObject.layer == 10) {
-                    foreach(char c in t.gameObject.name) {
+                    foreach(char c in g.name) {
                         stringBuilder.Append(c);
                     }
+
                     string charName = stringBuilder.ToString().Replace(remove, "");
-                    characters.Add(charName, t.gameObject); ;
+                    Debug.Log(charName);
+                    characters.Add(charName, g); ;
                 }
-            }
+            
         }
 
         //Check if the name before the ':' is a character and move the dialogue box to them
@@ -92,7 +96,7 @@ namespace Yarn.Unity.Example {
             foreach(KeyValuePair<string, GameObject> charName in characters)
 
             if (name.Equals(charName.Key)) {
-                    dialogueContainer.transform.position = charName.Value.transform.position;
+                    dialogueContainer.transform.position = new Vector2(charName.Value.transform.position.x, (charName.Value.transform.position.y + containerHeight));
             }
         }
 
@@ -105,9 +109,12 @@ namespace Yarn.Unity.Example {
                 // Display the line one character at a time
                 var stringBuilder = new StringBuilder();
 
+                //Check what the 
                 foreach (char c in line.text) {
+                    //If the Character equals ':' send the name before that char to the CheckName() function
                     if (c.Equals(':')){
                         Debug.Log(stringBuilder.ToString() + " is speaking");
+                        CheckName(stringBuilder.ToString());
                     }
 
                     stringBuilder.Append(c);
@@ -140,6 +147,8 @@ namespace Yarn.Unity.Example {
         /// Show a list of options, and wait for the player to make a selection.
         public override IEnumerator RunOptions(Options optionsCollection,
                                                 OptionChooser optionChooser) {
+
+            dialogueContainer.GetComponent<Image>().enabled = false;
             // Do a little bit of safety checking
             if (optionsCollection.options.Count > optionButtons.Count) {
                 Debug.LogWarning("There are more options to present than there are" +
@@ -177,6 +186,8 @@ namespace Yarn.Unity.Example {
 
             // Now remove the delegate so that the loop in RunOptions will exit
             SetSelectedOption = null;
+
+            dialogueContainer.GetComponent<Image>().enabled = true;
         }
 
         /// Run an internal command.
