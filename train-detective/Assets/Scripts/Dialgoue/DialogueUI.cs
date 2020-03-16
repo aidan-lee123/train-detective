@@ -91,6 +91,22 @@ namespace Yarn.Unity.Example {
             
         }
 
+
+        // TODO Rewrite Parsing of string so that we can get in some commands
+        public string ParseText(string line) {
+            string newLine = "";
+            newLine = line;
+            foreach (char c in newLine) { 
+                if (c.Equals(':')) {
+                  //  Debug.Log(stringBuilder.ToString() + " is speaking");
+                   // CheckName(stringBuilder.ToString());
+                }
+            }
+
+
+            return newLine;
+        }   
+        
         //Check if the name before the ':' is a character and move the dialogue box to them
         public void CheckName(string name) {
             foreach(KeyValuePair<string, GameObject> charName in characters)
