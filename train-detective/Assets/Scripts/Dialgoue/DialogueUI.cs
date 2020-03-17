@@ -45,12 +45,15 @@ namespace Yarn.Unity.Example {
 
         /// The buttons that let the user choose an option
         public List<Button> optionButtons;
+        public GameObject optionsIcon;
 
         /// Make it possible to temporarily disable the controls when
         /// dialogue is active and to restore them when dialogue ends
         public RectTransform gameControlsContainer;
 
         public float containerHeight;
+
+        public GameObject Player;
 
         void Awake() {
             // Start by hiding the container, line and option buttons
@@ -95,7 +98,38 @@ namespace Yarn.Unity.Example {
         // TODO Rewrite Parsing of string so that we can get in some commands
         public string ParseText(string line) {
             string newLine = "";
+            string command = "";
             newLine = line;
+
+            //Set the lineText Color to white at the beginning of each line
+            lineText.color = Color.white;
+
+            //If the line contains a tag then find out what it is
+            if (newLine.Contains("[") && newLine.Contains("]")) {
+                int endTag = newLine.IndexOf("]");
+                int beginTag = newLine.IndexOf("[");
+
+                //put the command between the two tag chars into a string
+                command = newLine.Substring(beginTag + 1, endTag - beginTag - 1);
+
+                //Switch depending on command
+                switch (command) {
+                    case "Blue":
+                        //Remove the command from the line
+                        newLine = newLine.Remove(beginTag, endTag - beginTag + 1);
+                        lineText.color = Color.blue;
+                        break;
+
+                    case "Yellow":
+                        newLine = newLine.Remove(beginTag, endTag - beginTag + 1);
+                        lineText.color = Color.yellow;
+                        break;
+                }
+                
+
+            }
+
+            //TODO
             foreach (char c in newLine) { 
                 if (c.Equals(':')) {
                   //  Debug.Log(stringBuilder.ToString() + " is speaking");
@@ -103,7 +137,7 @@ namespace Yarn.Unity.Example {
                 }
             }
 
-
+            //return the new altered string
             return newLine;
         }   
         
@@ -122,21 +156,29 @@ namespace Yarn.Unity.Example {
             lineText.gameObject.SetActive(true);
 
             if (textSpeed > 0.0f) {
+                string newLine = ParseText(line.text);
+
                 // Display the line one character at a time
                 var stringBuilder = new StringBuilder();
 
+
+
                 //Check what the 
-                foreach (char c in line.text) {
+                foreach (char c in newLine) {
                     //If the Character equals ':' send the name before that char to the CheckName() function
                     if (c.Equals(':')){
                         Debug.Log(stringBuilder.ToString() + " is speaking");
                         CheckName(stringBuilder.ToString());
                     }
 
+
                     stringBuilder.Append(c);
                     lineText.text = stringBuilder.ToString();
+
                     yield return new WaitForSeconds(textSpeed);
                 }
+
+
             }
             else {
                 // Display the line immediately if textSpeed == 0
@@ -181,6 +223,7 @@ namespace Yarn.Unity.Example {
 
             // Record that we're using it
             SetSelectedOption = optionChooser;
+            
 
             // Wait until the chooser has been used and then removed (see SetOption below)
             while (SetSelectedOption != null) {
@@ -199,6 +242,7 @@ namespace Yarn.Unity.Example {
             // Call the delegate to tell the dialogue system that we've
             // selected an option.
             SetSelectedOption(selectedOption);
+
 
             // Now remove the delegate so that the loop in RunOptions will exit
             SetSelectedOption = null;
@@ -225,7 +269,10 @@ namespace Yarn.Unity.Example {
             // Hide the game controls.
             if (gameControlsContainer != null) {
                 gameControlsContainer.gameObject.SetActive(false);
+                
             }
+
+            Player.GetComponent<PlayerController>().enabled = false;
 
             yield break;
         }
@@ -242,6 +289,8 @@ namespace Yarn.Unity.Example {
             if (gameControlsContainer != null) {
                 gameControlsContainer.gameObject.SetActive(true);
             }
+
+            Player.GetComponent<PlayerController>().enabled = true;
 
             yield break;
         }

@@ -6,7 +6,7 @@ position: 36,12
 parent: 
 ---
 <<if visited("Woman") is false>>
-    Player: Hey, Sally.
+    Player: <b>Hey, Sally</b>.
     Woman: Oh! Hi.
     Woman: You snuck up on me.
     Woman: Don't do that.

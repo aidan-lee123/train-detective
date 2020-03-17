@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MerinoTempData
   m_EditorClassIdentifier: 
   editedID: 7
-  timestamp: 33295.9631743
+  timestamp: 36486.11303
   viewState:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 07000000
@@ -40,7 +40,8 @@ MonoBehaviour:
   - {fileID: 4900000, guid: 8b6ae1e8d32e840f0b3fd0b033e52253, type: 3}
   - {fileID: 4900000, guid: 6ca9ce95dec45954da1189f58879a655, type: 3}
   - {fileID: 4900000, guid: 24f22b038d584445ba4f43344cc5733d, type: 3}
-  dirtyFiles: []
+  dirtyFiles:
+  - {fileID: 4900000, guid: 6ca9ce95dec45954da1189f58879a655, type: 3}
   treeElements:
   - m_ID: 0
     m_Name: Root
@@ -117,8 +118,8 @@ MonoBehaviour:
     m_Name: Woman
     m_Depth: 1
     nodeTags: 
-    nodeBody: "<<if visited(\"Woman\") is false>>\n    Player: Hey, Sally.\n    Woman:
-      Oh! Hi.\n    Woman: You snuck up on me.\n    Woman: Don't do that.\n<<else>>\n   
+    nodeBody: "<<if visited(\"Woman\") is false>>\n    Player: <b>Hey, Sally</b>.\n   
+      Woman: Oh! Hi.\n    Woman: You snuck up on me.\n    Woman: Don't do that.\n<<else>>\n   
       Player: Hey.\n    Woman: Hi.\n<<endif>>\n\n<<if not visited(\"Woman.Watch\")>>\n   
       [[Anything exciting happen on your watch?|Woman.Watch]]\n<<endif>>\n\n<<if
       $woman_warning and not visited(\"Woman.Sorry\")>>\n    [[Sorry about the console.|Woman.Sorry]]\n<<endif>>\n[[See
