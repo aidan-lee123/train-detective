@@ -26,10 +26,6 @@ public class BackgroundColour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
-
-
         spriteColour = new Color(spriteColour.r, spriteColour.g, spriteColour.b);
         spriteColour = Color.HSVToRGB( Hue, Saturation, Value);
 
