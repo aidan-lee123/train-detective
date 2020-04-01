@@ -6,10 +6,7 @@ position: 36,12
 parent: 
 ---
 <<if visited("Woman") is false>>
-    Player: <b>Hey, Sally</b>.
-    Woman: Oh! Hi.
-    Woman: You snuck up on me.
-    Woman: Don't do that.
+    Player: <b>Hey, Sally I was just wondering what you thought about the political climate of Uganda? I'm quite sure that if they keep heading the way they are then they are going to end up a world super power. what are your thoughts?	
 <<else>>
     Player: Hey.
     Woman: Hi.

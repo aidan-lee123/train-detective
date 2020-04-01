@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MerinoTempData
   m_EditorClassIdentifier: 
   editedID: 7
-  timestamp: 20539.5465324
+  timestamp: 9464.046978800001
   viewState:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 07000000
@@ -118,9 +118,11 @@ MonoBehaviour:
     m_Name: Woman
     m_Depth: 1
     nodeTags: 
-    nodeBody: "<<if visited(\"Woman\") is false>>\n    Player: <b>Hey, Sally</b>.\n   
-      Woman: Oh! Hi.\n    Woman: You snuck up on me.\n    Woman: Don't do that.\n<<else>>\n   
-      Player: Hey.\n    Woman: Hi.\n<<endif>>\n\n<<if not visited(\"Woman.Watch\")>>\n   
+    nodeBody: "<<if visited(\"Woman\") is false>>\n    Player: <b>Hey, Sally I was
+      just wondering what you thought about the political climate of Uganda? I'm
+      quite sure that if they keep heading the way they are then they are going to
+      end up a world super power. what are your thoughts?\t\n<<else>>\n    Player:
+      Hey.\n    Woman: Hi.\n<<endif>>\n\n<<if not visited(\"Woman.Watch\")>>\n   
       [[Anything exciting happen on your watch?|Woman.Watch]]\n<<endif>>\n\n<<if
       $woman_warning and not visited(\"Woman.Sorry\")>>\n    [[Sorry about the console.|Woman.Sorry]]\n<<endif>>\n[[See
       you later.|Woman.Exit]]"

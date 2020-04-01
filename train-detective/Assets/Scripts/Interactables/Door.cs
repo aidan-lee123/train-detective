@@ -10,6 +10,7 @@ public class Door : Interactable
     public float _rayLength = 2f;
     public List<GameObject> _actors = new List<GameObject>();
 
+
     private void OnDrawGizmos() {
         if(link != null)
             Gizmos.DrawLine(transform.position, link.transform.position);

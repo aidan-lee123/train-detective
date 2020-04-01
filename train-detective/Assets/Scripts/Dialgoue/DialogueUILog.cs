@@ -72,6 +72,7 @@ public class DialogueUILog : DialogueUIBehaviour {
     public List<GameObject> convoLines = new List<GameObject>();
 
     [SerializeField] private float speed = 10;
+    [SerializeField] public float fontSize = 12;
     public EmotionEvent onEmotionChange;
     public ActionEvent onAction;
     public TextRevealEvent onTextReveal;
@@ -230,21 +231,26 @@ public class DialogueUILog : DialogueUIBehaviour {
 
     public GameObject CreateText() {
         GameObject newObject = new GameObject();
+
+
         newObject.transform.SetParent(textContainer);
-        newObject.transform.SetSiblingIndex(lineNum);
+        newObject.transform.SetAsLastSibling();
 
         newObject.name = "Line Number: " + lineNum;
 
         TextMeshProUGUI text = newObject.AddComponent<TextMeshProUGUI>();
-        text.fontSize = 15;
+        text.font = Resources.Load("UI/Fonts/Timeless SDF", typeof(TMP_FontAsset)) as TMP_FontAsset;
+        text.fontSize = fontSize;
 
 
         LayoutElement layout = newObject.AddComponent<LayoutElement>();
         layout.minHeight = 20;
+        layout.minWidth = 200;
 
 
         lineNum++;
         return newObject;
+
 
     }
 
@@ -252,7 +258,7 @@ public class DialogueUILog : DialogueUIBehaviour {
     public override IEnumerator RunLine(Line line) {
         // Show the text
         //lineText.gameObject.SetActive(true);
-
+        speed = 20;
         Debug.Log(line.text);
         ParseText(line.text);
 
@@ -262,6 +268,7 @@ public class DialogueUILog : DialogueUIBehaviour {
 
         // Wait for any user input
         while (Input.anyKeyDown == false) {
+            speed = 1000;
             yield return null;
         }
 
@@ -277,7 +284,7 @@ public class DialogueUILog : DialogueUIBehaviour {
     public override IEnumerator RunOptions(Options optionsCollection,
                                             OptionChooser optionChooser) {
 
-        dialogueContainer.GetComponent<Image>().enabled = false;
+
         // Do a little bit of safety checking
         if (optionsCollection.options.Count > optionButtons.Count) {
             Debug.LogWarning("There are more options to present than there are" +
@@ -288,7 +295,7 @@ public class DialogueUILog : DialogueUIBehaviour {
         int i = 0;
         foreach (var optionString in optionsCollection.options) {
             optionButtons[i].gameObject.SetActive(true);
-            optionButtons[i].GetComponentInChildren<Text>().text = optionString;
+            optionButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = optionString;
             i++;
         }
 
@@ -351,6 +358,12 @@ public class DialogueUILog : DialogueUIBehaviour {
     /// Called when the dialogue system has finished running.
     public override IEnumerator DialogueComplete() {
         Debug.Log("Complete!");
+
+        foreach(GameObject line in convoLines) {
+            Destroy(line);
+        }
+
+        convoLines.Clear();
 
         // Hide the dialogue interface.
         if (dialogueContainer != null)
