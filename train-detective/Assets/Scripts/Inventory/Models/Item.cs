@@ -13,13 +13,13 @@ public class Item
         this.id = id;
         this.title = title;
         this.description = description;
-        this.icon = Resources.Load<Sprite>("Items/" + title);
+        this.icon = Resources.Load<Sprite>("Sprites/Items/" + title);
     }
 
     public Item(Item item) {
         this.id = item.id;
         this.title = item.title;
         this.description = item.description;
-        this.icon = Resources.Load<Sprite>("Items/" + item.title);
+        this.icon = Resources.Load<Sprite>("Sprites/Items/" + item.title);
     }
 }
