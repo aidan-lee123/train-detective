@@ -16,6 +16,20 @@ public class UIInventory : MonoBehaviour
             instance.transform.SetParent(slotPanel);
             UIItems.Add(instance.GetComponentInChildren<UIItem>());
         }
+
+        HideInventory(true);
+    }
+
+    public void HideInventory(bool state) {
+
+        RectTransform rect = GetComponent<RectTransform>();
+
+        if (state) {
+            rect.localScale = new Vector3(0, 0, 0);
+        }
+        else {
+            rect.localScale = new Vector3(1, 1, 1);
+        }
     }
 
     public void UpdateSlot(int slot, Item item) {

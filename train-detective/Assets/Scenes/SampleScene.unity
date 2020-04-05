@@ -5030,6 +5030,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _runSpeed: 40
+  InventoryUI: {fileID: 2118047085}
 --- !u!114 &898853916
 MonoBehaviour:
   m_ObjectHideFlags: 0

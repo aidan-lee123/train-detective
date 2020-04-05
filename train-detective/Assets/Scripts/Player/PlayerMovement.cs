@@ -9,11 +9,14 @@ public class PlayerMovement : MonoBehaviour
     public float _runSpeed = 20f;
     float _horizontalMove = 0f;
     private PlayerController _controller;
+    public GameObject InventoryUI;
+
+    private bool showInventory = true;
 
     private void Awake() {
 
         _controller = GetComponent<PlayerController>();
-
+        
     }
 
 
@@ -24,6 +27,14 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E)) {
             _controller.CheckForNearbyNPC();
         }
+
+        if (Input.GetKeyDown(KeyCode.I)) {
+            showInventory = !showInventory;
+
+            InventoryUI.GetComponent<UIInventory>().HideInventory(showInventory);
+        }
+
+        
 
          /* OBSOLETE
         if(_controller.CheckForward() != null)
