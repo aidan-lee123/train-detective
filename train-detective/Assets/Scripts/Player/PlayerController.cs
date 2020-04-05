@@ -128,4 +128,15 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    public void CheckForNearbyInteractable() {
+        var allParticipants = new List<Interactable>(FindObjectsOfType<Interactable>());
+        var target = allParticipants.Find(delegate (Interactable p) {
+            return (p.transform.position - this.transform.position).magnitude <= interactionRadius; //Is in range
+        });
+        if (target != null) {
+            // Kick off the dialogue at this node.
+            GetComponent<InventoryManager>().GiveItem(target.ID);
+        }
+    }
+
 }

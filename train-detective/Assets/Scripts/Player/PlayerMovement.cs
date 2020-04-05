@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E)) {
             _controller.CheckForNearbyNPC();
+            _controller.CheckForNearbyInteractable();
         }
 
         if (Input.GetKeyDown(KeyCode.I)) {
