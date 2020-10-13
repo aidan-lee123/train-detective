@@ -6,6 +6,8 @@ public class ItemDatabase : MonoBehaviour
 {
     public List<Item> items = new List<Item>();
 
+    public TextAsset itemListText;
+
     private void Awake() {
         BuildDatabase();
            
@@ -20,9 +22,11 @@ public class ItemDatabase : MonoBehaviour
     }
 
     void BuildDatabase() {
+
         items = new List<Item> {
             new Item(0, "Test", "Test"),
             new Item(1, "Test2", "Test2")
         };
+        
     }
 }

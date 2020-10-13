@@ -17,9 +17,6 @@ public class Door : MonoBehaviour
     }
 
     private void Update() {
-
-        
-
         if (Input.GetKeyDown(KeyCode.E)) {
             foreach(GameObject actor in _actors) {
                 if(actor.layer == 9) {
@@ -51,7 +48,7 @@ public class Door : MonoBehaviour
 
     public void MoveCharacter(GameObject character) {
         if(link != null) {
-            character.transform.position = new Vector2(link.transform.position.x, character.transform.position.y);
+            character.transform.position = new Vector2(link.transform.position.x, link.transform.position.y);
         }
         else {
             Debug.Log("Assign a link to this door!");

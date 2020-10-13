@@ -5,9 +5,6 @@ using Yarn.Unity;
 
 public class PlayerMovement : MonoBehaviour
 {
-
-    public float _runSpeed = 20f;
-    float _horizontalMove = 0f;
     private PlayerController _controller;
     public GameObject InventoryUI;
 
@@ -22,32 +19,22 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update() {
 
-        _horizontalMove = Input.GetAxisRaw("Horizontal") * _runSpeed;
+
 
         if (Input.GetKeyDown(KeyCode.E)) {
             _controller.CheckForNearbyNPC();
             _controller.CheckForNearbyInteractable();
         }
 
-        if (Input.GetKeyDown(KeyCode.I)) {
+        if (Input.GetKeyDown(KeyCode.Tab)) {
             showInventory = !showInventory;
 
             InventoryUI.GetComponent<UIInventory>().HideInventory(showInventory);
         }
-
-        
-
-         /* OBSOLETE
-        if(_controller.CheckForward() != null)
-            _controller.CheckForward().GetComponent<Door>().DisplayArrow();
-
-        if(_controller.CheckBack() != null)
-            _controller.CheckBack().GetComponent<Door>().HideArrow();
-        */
     }
 
     private void FixedUpdate() {
-        _controller.Move(_horizontalMove * Time.fixedDeltaTime);
+
         //Debug.Log(_controller.CheckForward().name);
     }
 }
