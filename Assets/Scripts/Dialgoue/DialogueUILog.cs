@@ -68,7 +68,7 @@ public class DialogueUILog : DialogueUIBehaviour {
     public GameObject Player;
 
     public Transform textContainer;
-    public Font textFont;
+    public TMP_FontAsset textMeshFont;
     public List<GameObject> convoLines = new List<GameObject>();
 
     [SerializeField] private float speed = 10;
@@ -157,6 +157,7 @@ public class DialogueUILog : DialogueUIBehaviour {
         convoLines.Add(text);
         //Get the Text Mesh Pro component
         TextMeshProUGUI tmp = text.GetComponent<TextMeshProUGUI>();
+        tmp.font = textMeshFont;
 
         // send that string to textmeshpro and hide all of it, then start reading
         tmp.text = displayText;
