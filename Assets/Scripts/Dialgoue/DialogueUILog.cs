@@ -340,7 +340,8 @@ public class DialogueUILog : DialogueUIBehaviour {
     /// Called when the dialogue system has started running.
     public override IEnumerator DialogueStarted() {
         Debug.Log("Dialogue starting!");
-        Vector3 DialoguePosition = Player.transform.position;
+        Player.GetComponent<Animator>().SetFloat("Speed", 0);
+        Player.GetComponent<PlayerController>().Move(0);
         // Enable the dialogue controls.
         if (dialogueContainer != null)
             dialogueContainer.SetActive(true);

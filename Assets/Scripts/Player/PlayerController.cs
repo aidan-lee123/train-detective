@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour {
     public float _runSpeed = 20f;
     float _horizontalMove = 0f;
     bool canMove = true;
-    private bool _facingRight = true;
+    private bool _facingRight = false;
 
     //Interaction Stuff
     public float interactionRadius = 2.0f;
@@ -45,9 +45,6 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        if (onClimbable || isClimbing)
-            UseClimbable();
-
         if(canMove)
             Move(_horizontalMove * Time.fixedDeltaTime);
     }
@@ -57,9 +54,6 @@ public class PlayerController : MonoBehaviour {
 
         Vector3 targetVelocity = new Vector2(move * 10f, _rigidBody.velocity.y);
 
-        if (FindObjectOfType<DialogueRunner>().isDialogueRunning == true) {
-            targetVelocity = Vector3.zero;
-        }
         _animator.SetFloat("Speed", Mathf.Abs(move));
 
         _rigidBody.velocity = Vector3.SmoothDamp(_rigidBody.velocity, targetVelocity, ref _velocity, _movementSmoothing);
@@ -75,6 +69,7 @@ public class PlayerController : MonoBehaviour {
     private void Flip() {
         _facingRight = !_facingRight;
 
+
         if (_facingRight == true) {
             transform.eulerAngles = new Vector3(0, -180, 0);
         }
@@ -87,58 +82,6 @@ public class PlayerController : MonoBehaviour {
         scale.x *= -1;
         transform.localScale = scale;*/
     }
-    #endregion
-
-    #region Climbable
-    bool onClimbable = false;
-    bool isClimbing = false;
-    float climbPercentage;
-    float ClimbingSpeed = 0.5f;
-    Vector2 vectorStart, vectorEnd; //starting and ending point of the climbable
-
-
-    public void UseClimbable() {
-        float inputVer = Input.GetAxisRaw("Vertical");
-
-        if(inputVer != 0) {
-            climbPercentage += Time.deltaTime * ClimbingSpeed * inputVer;
-            this.gameObject.transform.position = Vector2.Lerp(vectorStart, vectorEnd, climbPercentage);
-        }
-
-        climbPercentage = Mathf.Clamp01(climbPercentage);
-
-        //if the Player reaches any end he can move again
-        if (climbPercentage == 0 || climbPercentage == 1) {
-            isClimbing = false;
-            canMove = true;
-        }
-        else {
-            isClimbing = true;
-            canMove = false;
-        }
-    }
-
-
-    //Called to set the Climbable Data
-    public void SetClimbableData(bool onClimbable, Vector2 StartY, Vector2 EndY, bool isDown, float ClimbingSpeed) {
-        this.onClimbable = onClimbable;
-
-        this.vectorStart = StartY;
-        this.vectorEnd = EndY;
-
-        //to Check at what end the Player is
-        if (isDown)
-            climbPercentage = 0;
-        else
-            climbPercentage = 1;
-
-        this.ClimbingSpeed = ClimbingSpeed;
-    }
-    public void OffClimbable() {
-        onClimbable = false;
-        canMove = true;
-    }
-
     #endregion
 
     #region Obsolete Raycasts

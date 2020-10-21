@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Yarn.Unity;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerInput : MonoBehaviour
 {
     private PlayerController _controller;
     public GameObject InventoryUI;
@@ -20,12 +20,13 @@ public class PlayerMovement : MonoBehaviour
     private void Update() {
 
 
-
+        //Interacting with things
         if (Input.GetKeyDown(KeyCode.E)) {
             _controller.CheckForNearbyNPC();
             _controller.CheckForNearbyInteractable();
         }
 
+        //Open Inventory
         if (Input.GetKeyDown(KeyCode.Tab)) {
             showInventory = !showInventory;
 
