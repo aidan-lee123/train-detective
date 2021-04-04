@@ -8,17 +8,18 @@ public class UIItem : MonoBehaviour
 {
     public Item item;
     private Image spriteImage;
-    private UIItem selectedItem;
+    //private UIItem selectedItem;
     private ItemDragHandler dragHandler;
 
     private void Awake() {
         spriteImage = GetComponent<Image>();
         dragHandler = GetComponent<ItemDragHandler>();
         UpdateItem(null);
-        selectedItem = GameObject.Find("SelectedItem").GetComponent<UIItem>();
+        //selectedItem = GameObject.Find("SelectedItem").GetComponent<UIItem>();
     }
 
     public void UpdateItem(Item item) {
+        //Debug.Log("Updating Item " + name);
         this.item = item;
         if(this.item != null) {
             spriteImage.color = Color.white;
