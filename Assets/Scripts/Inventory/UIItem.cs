@@ -4,14 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class UIItem : MonoBehaviour, IPointerClickHandler
+public class UIItem : MonoBehaviour
 {
     public Item item;
     private Image spriteImage;
     private UIItem selectedItem;
+    private ItemDragHandler dragHandler;
 
     private void Awake() {
         spriteImage = GetComponent<Image>();
+        dragHandler = GetComponent<ItemDragHandler>();
         UpdateItem(null);
         selectedItem = GameObject.Find("SelectedItem").GetComponent<UIItem>();
     }
@@ -27,6 +29,7 @@ public class UIItem : MonoBehaviour, IPointerClickHandler
         }
     }
 
+    /*
     public void OnPointerClick(PointerEventData eventData) {
         Debug.Log(name + " Game Object Clicked!");
 
@@ -51,4 +54,5 @@ public class UIItem : MonoBehaviour, IPointerClickHandler
             
         }
     }
+    */
 }

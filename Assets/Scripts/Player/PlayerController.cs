@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void Update() {
-        _horizontalMove = Input.GetAxisRaw("Horizontal") * _runSpeed;
+
 
         // Remove all player control when we're in dialogue
         if (FindObjectOfType<DialogueRunner>().isDialogueRunning == true) {
@@ -44,8 +44,10 @@ public class PlayerController : MonoBehaviour {
 
     }
 
+
     private void FixedUpdate() {
-        if(canMove)
+        _horizontalMove = Input.GetAxisRaw("Horizontal") * _runSpeed;
+        if (canMove)
             Move(_horizontalMove * Time.fixedDeltaTime);
     }
 
