@@ -23,19 +23,14 @@ public class ItemDropHandler : MonoBehaviour, IDropHandler
 
 
             newChild.parentSlot = transform;
+            newChild.DroppedOnSlot = true;
             itemChild = eventData.pointerDrag.transform;
             itemChild.localPosition = Vector3.zero;
-
-
-
-
-
-            Debug.Log("Updating Dropped On Slot");
         }
     }
 
     public void UpdateChild() {
-        Debug.Log("Updating Child for " + name);
+        //Debug.Log("Updating Child for " + name);
         itemChild = transform.GetChild(0);
     }
 

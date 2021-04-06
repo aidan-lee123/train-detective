@@ -24,15 +24,9 @@ public class ItemDragHandler : MonoBehaviour, IDragHandler, IEndDragHandler, IBe
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
-        Debug.Log("Dragging Item");
         UIItem clickedItem = eventData.pointerDrag.GetComponent<UIItem>();
         canvasGroup.blocksRaycasts = false;
         droppedOnSlot = false;
-
-        //selectedItem.UpdateItem(clickedItem.item);
-        //selectedItem.originalItem = clickedItem;
-        //clickedItem.UpdateItem(null);
-
     }
 
     public void OnDrag(PointerEventData eventData) {
@@ -41,23 +35,9 @@ public class ItemDragHandler : MonoBehaviour, IDragHandler, IEndDragHandler, IBe
 
     public void OnEndDrag(PointerEventData eventData) {
         UIItem droppedItem = eventData.pointerDrag.GetComponent<UIItem>();
-        StartCoroutine(WasDropped(droppedItem));
+        transform.localPosition = Vector3.zero;
         canvasGroup.blocksRaycasts = true;
 
     }
-
-    private IEnumerator WasDropped(UIItem droppedItem) {
-        Debug.Log(droppedOnSlot);
-        yield return new WaitForEndOfFrame();
-
-        if (!droppedOnSlot) {
-            Debug.Log("Not Dropped on Slot");
-            transform.localPosition = Vector3.zero;
-        }
-        else {
-            Debug.Log("Dropped on Slot");
-        }
-    }
-
 
 }
