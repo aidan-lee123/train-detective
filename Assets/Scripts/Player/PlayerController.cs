@@ -27,6 +27,9 @@ public class PlayerController : MonoBehaviour {
     private float _rayOffset = 0.5f;
     private int _rayLayerMask;
 
+    Ray ray;
+    RaycastHit2D hit;
+
     private void Awake() {
         playerCollider = GetComponent<BoxCollider2D>();
         _rigidBody = GetComponent<Rigidbody2D>();
@@ -41,6 +44,9 @@ public class PlayerController : MonoBehaviour {
             Move(0);
             return;
         }
+
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        MouseRay(ray, hit);
 
     }
 
@@ -159,6 +165,26 @@ public class PlayerController : MonoBehaviour {
             GetComponent<InventoryManager>().GiveItem(target.ID);
         }
     }
+
+    private Collider2D currentHover;
+
+    public void MouseRay(Ray ray, RaycastHit2D hit) {
+        int mask = LayerMask.GetMask("Interactable");
+        hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, mask);
+        if (hit.collider == null) {
+            //Debug.Log("nothing hit");
+            if(currentHover != null) {
+                currentHover.GetComponent<Interactable>().Glow(false);
+                currentHover = null;
+            }
+        }
+        else {
+            currentHover = hit.collider;
+            hit.collider.GetComponent<Interactable>().Glow(true);
+        }
+    }
+
+
     #endregion
 
 }

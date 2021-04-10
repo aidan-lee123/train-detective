@@ -24,8 +24,8 @@ public class Cabin : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
+    void Awake()
     {
-        
+        cabinSprite.SetActive(true);
     }
 }

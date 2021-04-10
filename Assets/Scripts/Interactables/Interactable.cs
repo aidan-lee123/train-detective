@@ -18,4 +18,15 @@ public class Interactable : MonoBehaviour
     {
         
     }
+
+    public void Glow(bool state) {
+        switch (state) {
+            case true:
+                print("Turn on Glow");
+                break;
+            case false:
+                print("Turn off Glow");
+                break;
+        }
+    }
 }
