@@ -5,22 +5,22 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class UIItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
+public class UIItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler {
     public Item item;
     private Image spriteImage;
     private ItemDragHandler dragHandler;
     private UIInventoryTitle itemTitle;
+    private UIInspectItem inspector;
 
     private void Awake() {
         spriteImage = GetComponent<Image>();
         dragHandler = GetComponent<ItemDragHandler>();
         itemTitle = GameObject.Find("ItemName_Inventory").GetComponent<UIInventoryTitle>();
-        //itemName.gameObject.SetActive(false);
+        inspector = GameObject.Find("InventoryInspectPanel").GetComponent<UIInspectItem>();
         UpdateItem(null);
     }
 
     public void UpdateItem(Item item) {
-        //Debug.Log("Updating Item " + name);
         this.item = item;
         if(this.item != null) {
             spriteImage.color = Color.white;
@@ -38,21 +38,17 @@ public class UIItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
             itemTitle.UpdateText(item.title);
         }
 
-        /*
-        if(eventData.pointerEnter.GetComponent<Item>() != null) {
-            itemName.text = item.title;
-            itemName.gameObject.SetActive(true);
-        }
-        */
       }
 
     public void OnPointerExit(PointerEventData eventData) {
         if(item != null) {
             itemTitle.HideText(true);
         }
-        /*
-        itemName.text = null;
-        itemName.gameObject.SetActive(false);
-        */
+
+    }
+
+    public void OnPointerClick(PointerEventData eventData) {
+        Debug.Log(name + " clicked");
+        inspector.SetItem(item);
     }
 }
