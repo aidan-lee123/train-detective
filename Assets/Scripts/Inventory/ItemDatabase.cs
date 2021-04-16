@@ -24,7 +24,7 @@ public class ItemDatabase : MonoBehaviour
     void BuildDatabase() {
 
         items = new List<Item> {
-            new Item(0, "Test", "Test"),
+            new Item(0, "Test", "This is a test"),
             new Item(1, "Test2", "Test2")
         };
         

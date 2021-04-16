@@ -7,7 +7,6 @@ using TMPro;
 public class UIInspectItem : MonoBehaviour
 {
     public Image itemImage;
-    public TMP_Text itemName;
     public TMP_Text itemDesc;
     private Sprite itemSprite;
 
@@ -27,7 +26,7 @@ public class UIInspectItem : MonoBehaviour
         itemSprite = item.icon;
 
         itemImage.sprite = itemSprite;
-        itemName.text = item.title;
+        itemDesc.text = item.description;
 
         Hide(false);
     }

@@ -16,7 +16,7 @@ public class UIItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
         spriteImage = GetComponent<Image>();
         dragHandler = GetComponent<ItemDragHandler>();
         itemTitle = GameObject.Find("ItemName_Inventory").GetComponent<UIInventoryTitle>();
-        inspector = GameObject.Find("InventoryInspectPanel").GetComponent<UIInspectItem>();
+        inspector = GameObject.Find("InventoryInspector").GetComponent<UIInspectItem>();
         UpdateItem(null);
     }
 
