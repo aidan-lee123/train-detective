@@ -1,18 +1,29 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TimeKeeper : MonoBehaviour
 {
+    //How many real seconds is an In Game Minute
+    public float _inGameMinute = 5f;
 
-    public float _inGameMinute;
-    private int minute;
-    public int Minute {
+    private TimeSpan time;
+    public TimeSpan Time {
         get {
-            return minute;
+            return time;
         }
     }
-    
+    public int Minute {
+        get {
+            return time.Minutes;
+        }
+    }
+    public int Hour {
+        get {
+            return time.Hours;
+        }
+    }
 
     public static TimeKeeper Instance { get; set; }
 
@@ -21,25 +32,48 @@ public class TimeKeeper : MonoBehaviour
             Destroy(gameObject);
         else
             Instance = this;
-
+        time = TimeSpan.FromMinutes(0);
         StartCoroutine(CountMinute());
     }
 
-    public int AddMinutes(int amount) {
-        minute += amount;
-        return minute;
+    public TimeSpan SetTime(TimeSpan _time) {
+        time = _time;
+        return time;
     }
 
-    public int MinusMinutes(int amount) {
-        minute += amount;
-        return minute;
+    #region Adding and Minusing from Time
+    public TimeSpan AddMinutes(int amount) {
+        time += TimeSpan.FromMinutes(amount);
+        return time;
     }
+
+    public TimeSpan AddHours(int amount) {
+        time += TimeSpan.FromHours(amount);
+        return time;
+    }
+
+    public TimeSpan MinusMinutes(int amount) {
+        time -= TimeSpan.FromMinutes(amount);
+        return time;
+    }
+
+    public TimeSpan MinusHours(int amount) {
+        time -= TimeSpan.FromHours(amount);
+        return time;
+    }
+    #endregion
 
     private IEnumerator CountMinute() {
 
         while (true) {
             yield return new WaitForSecondsRealtime(_inGameMinute);
-            minute++;
+            time += TimeSpan.FromMinutes(1);
+            Debug.Log(time.ToString());
         }
+    }
+
+    public override string ToString() {
+
+        return time.ToString();
     }
 }
