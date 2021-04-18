@@ -8,20 +8,27 @@ public class TimeKeeper : MonoBehaviour
     //How many real seconds is an In Game Minute
     public float _inGameMinute = 5f;
 
+
+
     private TimeSpan time;
     public TimeSpan Time {
         get {
-            return time;
+            return Instance.time;
         }
     }
     public int Minute {
         get {
-            return time.Minutes;
+            return Instance.time.Minutes;
         }
     }
     public int Hour {
         get {
-            return time.Hours;
+            return Instance.time.Hours;
+        }
+    }
+    public int Day {
+        get {
+            return Instance.time.Days;
         }
     }
 
@@ -32,48 +39,71 @@ public class TimeKeeper : MonoBehaviour
             Destroy(gameObject);
         else
             Instance = this;
-        time = TimeSpan.FromMinutes(0);
+        Instance.time = TimeSpan.FromMinutes(0);
         StartCoroutine(CountMinute());
     }
 
     public TimeSpan SetTime(TimeSpan _time) {
-        time = _time;
-        return time;
+        Instance.time = _time;
+        return Instance.time;
     }
 
-    #region Adding and Minusing from Time
+    #region Adding, Minusing and Setting Time
     public TimeSpan AddMinutes(int amount) {
-        time += TimeSpan.FromMinutes(amount);
+        Instance.time += TimeSpan.FromMinutes(amount);
         return time;
     }
 
     public TimeSpan AddHours(int amount) {
-        time += TimeSpan.FromHours(amount);
+        Instance.time += TimeSpan.FromHours(amount);
         return time;
     }
 
     public TimeSpan MinusMinutes(int amount) {
-        time -= TimeSpan.FromMinutes(amount);
+        Instance.time -= TimeSpan.FromMinutes(amount);
         return time;
     }
 
     public TimeSpan MinusHours(int amount) {
-        time -= TimeSpan.FromHours(amount);
+        Instance.time -= TimeSpan.FromHours(amount);
         return time;
+    }
+
+    public TimeSpan SetDay() {
+        Instance.time = TimeSpan.FromHours(6);
+        return Instance.time;
+    }
+
+    public TimeSpan SetNight() {
+        Instance.time = TimeSpan.FromHours(18);
+        return Instance.time;
     }
     #endregion
 
+
+
+    private int CheckTime() {
+        int hour = Instance.time.Hours;
+
+        return hour;
+    }
+
+
+
+    #region Coroutines
     private IEnumerator CountMinute() {
 
         while (true) {
             yield return new WaitForSecondsRealtime(_inGameMinute);
-            time += TimeSpan.FromMinutes(1);
-            Debug.Log(time.ToString());
+            Instance.time += TimeSpan.FromMinutes(1);
+            PlayerHUD.Instance.SetTime();
+            CheckTime();
         }
     }
+    #endregion
 
     public override string ToString() {
 
-        return time.ToString();
+        return Instance.time.ToString();
     }
 }
