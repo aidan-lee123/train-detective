@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Yarn.Unity;
+using Chronos;
 
 public class PlayerController : MonoBehaviour {
 
     [Header("References")]
     public Animator _animator;
     private Rigidbody2D _rigidBody;
+    private Timeline time;
     private BoxCollider2D playerCollider;
 
     [Header("Inputs")]
@@ -34,6 +36,7 @@ public class PlayerController : MonoBehaviour {
         playerCollider = GetComponent<BoxCollider2D>();
         _rigidBody = GetComponent<Rigidbody2D>();
         _rayLayerMask = 8;
+        time = GetComponent<Timeline>();
     }
 
     private void Update() {
@@ -64,7 +67,7 @@ public class PlayerController : MonoBehaviour {
 
         _animator.SetFloat("Speed", Mathf.Abs(move));
 
-        _rigidBody.velocity = Vector3.SmoothDamp(_rigidBody.velocity, targetVelocity, ref _velocity, _movementSmoothing);
+        time.rigidbody2D.velocity = Vector3.SmoothDamp(_rigidBody.velocity, targetVelocity, ref _velocity, _movementSmoothing);
 
         if (move > 0 && !_facingRight) {
             Flip();

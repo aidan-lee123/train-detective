@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Chronos;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,12 +21,15 @@ public class PatrolState : BaseState {
     private float _rayDistance = 0.5f;
     private Animator _animator;
 
+    private Timeline time;
+
 
     public PatrolState(NPC npc) : base(npc.gameObject) {
         _npc = npc;
         _patrolPoints = _npc.GetPoints();
         _rigidBody = npc.GetComponent<Rigidbody2D>();
         _animator = npc.GetComponent<Animator>();
+        time = npc.GetComponent<Timeline>();
 
     }
 
@@ -65,9 +69,9 @@ public class PatrolState : BaseState {
         _animator.SetFloat("Speed", Mathf.Abs(targetVelocity.x));
 
         if (_facingRight)
-            _rigidBody.velocity = Vector3.SmoothDamp(_rigidBody.velocity, targetVelocity, ref _velocity, _movementSmoothing);
+            time.rigidbody2D.velocity = Vector3.SmoothDamp(_rigidBody.velocity, targetVelocity, ref _velocity, _movementSmoothing);
         else
-            _rigidBody.velocity = Vector3.SmoothDamp(_rigidBody.velocity, targetVelocity, ref _velocity, _movementSmoothing);
+            time.rigidbody2D.velocity = Vector3.SmoothDamp(_rigidBody.velocity, targetVelocity, ref _velocity, _movementSmoothing);
     }
 
 

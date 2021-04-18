@@ -5063,6 +5063,7 @@ GameObject:
   - component: {fileID: 825938819}
   - component: {fileID: 825938820}
   - component: {fileID: 825938818}
+  - component: {fileID: 825938821}
   m_Layer: 10
   m_Name: NPC_Woman
   m_TagString: NPC
@@ -5236,6 +5237,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13512dabb142a2249a0257c948c63809, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &825938821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825938813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6090da511f8374135a15dd8655adcd44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _recordingInterval: 0.5
+  _mode: 1
+  _globalClockKey: NPC
+  _rewindable: 1
+  _recordingDuration: 30
 --- !u!1 &834998425
 GameObject:
   m_ObjectHideFlags: 0
@@ -5413,7 +5431,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 907846805}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &871717077
 GameObject:
@@ -5727,6 +5745,7 @@ GameObject:
   - component: {fileID: 898853914}
   - component: {fileID: 898853915}
   - component: {fileID: 898853916}
+  - component: {fileID: 898853917}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -5908,6 +5927,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemDatabase: {fileID: 854201147}
   inventoryUI: {fileID: 2118047087}
+--- !u!114 &898853917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 898853908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6090da511f8374135a15dd8655adcd44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _recordingInterval: 0.5
+  _mode: 1
+  _globalClockKey: Player
+  _rewindable: 1
+  _recordingDuration: 30
 --- !u!1 &905911652
 GameObject:
   m_ObjectHideFlags: 0
@@ -6031,8 +6067,8 @@ Transform:
   m_LocalPosition: {x: 671.2254, y: 269.06064, z: -444.35184}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1371932122}
   - {fileID: 854201148}
-  - {fileID: 1768682805}
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8589,6 +8625,8 @@ GameObject:
   - component: {fileID: 1371932121}
   - component: {fileID: 1371932120}
   - component: {fileID: 1371932119}
+  - component: {fileID: 1371932124}
+  - component: {fileID: 1371932123}
   m_Layer: 0
   m_Name: Timekeeper
   m_TagString: Untagged
@@ -8610,9 +8648,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _localTimeScale: 1
   _paused: 0
-  _parentKey: 
+  _parentKey: Root
   _parentBlend: 0
-  _key: NPCs
+  _key: NPC
 --- !u!114 &1371932120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8642,7 +8680,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a10179de595094539a3ca7ba94d6b1c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _debug: 0
+  _debug: 1
   _maxParticleLoops: 10
 --- !u!4 &1371932122
 Transform:
@@ -8651,13 +8689,43 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1371932118}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -671.2254, y: -269.06064, z: 444.35184}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_Father: {fileID: 907846805}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1371932123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1371932118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 733000b714e4157419d713fc7fc69af4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inGameMinute: 1
+--- !u!114 &1371932124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1371932118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0144e3ad8a88947298e2dca62625e6ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _localTimeScale: 1
+  _paused: 0
+  _parentKey: Root
+  _parentBlend: 0
+  _key: Player
 --- !u!1 &1388734061
 GameObject:
   m_ObjectHideFlags: 0
@@ -11151,50 +11219,6 @@ Transform:
   m_Father: {fileID: 1226323853}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1768682804
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1768682805}
-  - component: {fileID: 1768682806}
-  m_Layer: 0
-  m_Name: Time Keeper
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1768682805
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1768682804}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 907846805}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1768682806
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1768682804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 733000b714e4157419d713fc7fc69af4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _inGameMinute: 1
 --- !u!1 &1775413440
 GameObject:
   m_ObjectHideFlags: 0

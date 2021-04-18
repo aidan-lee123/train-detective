@@ -2,13 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Chronos;
 
-public class TimeKeeper : MonoBehaviour
+public class TimeManager : MonoBehaviour
 {
     //How many real seconds is an In Game Minute
     public float _inGameMinute = 5f;
-
-
+    private Clock clock;
 
     private TimeSpan time;
     public TimeSpan Time {
@@ -32,13 +32,14 @@ public class TimeKeeper : MonoBehaviour
         }
     }
 
-    public static TimeKeeper Instance { get; set; }
+    public static TimeManager Instance { get; set; }
 
     private void Awake() {
         if (Instance != null)
             Destroy(gameObject);
         else
             Instance = this;
+        Instance.clock = Timekeeper.instance.Clock("Root");
         Instance.time = TimeSpan.FromMinutes(0);
         StartCoroutine(CountMinute());
     }
@@ -92,9 +93,18 @@ public class TimeKeeper : MonoBehaviour
 
     #region Coroutines
     private IEnumerator CountMinute() {
+        // Run First In Game Minute without Timescale 
+        yield return new WaitForSecondsRealtime(_inGameMinute);
+        Instance.time += TimeSpan.FromMinutes(1);
+        PlayerHUD.Instance.SetTime();
+        CheckTime();
 
+        //Continue with TimeScale
         while (true) {
-            yield return new WaitForSecondsRealtime(_inGameMinute);
+            var waitTime = (_inGameMinute / clock.timeScale);
+
+            //Debug.Log("In Game Minute : " + _inGameMinute + "\nTime Scale: " + clock.timeScale + "\nWait Time: " + waitTime);
+            yield return new WaitForSecondsRealtime(waitTime);
             Instance.time += TimeSpan.FromMinutes(1);
             PlayerHUD.Instance.SetTime();
             CheckTime();

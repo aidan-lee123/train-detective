@@ -18,7 +18,7 @@ public class PlayerHUD : MonoBehaviour
     }
 
     public void SetTime() {
-        clock.text = TimeKeeper.Instance.ToString();
+        clock.text = TimeManager.Instance.ToString();
     }
 
     void Update()
