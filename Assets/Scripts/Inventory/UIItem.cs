@@ -12,6 +12,8 @@ public class UIItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
     private UIInventoryTitle itemTitle;
     private UIInspectItem inspector;
 
+    private static LTDescr delay;
+
     private void Awake() {
         spriteImage = GetComponent<Image>();
         dragHandler = GetComponent<ItemDragHandler>();
@@ -33,16 +35,22 @@ public class UIItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
 
     public void OnPointerEnter(PointerEventData eventData) {
         if(item != null) {
-            Debug.Log("Hovered Over " + item.title);
-            itemTitle.HideText(false);
-            itemTitle.UpdateText(item.title);
+            delay = LeanTween.delayedCall(0.5f, () => {
+                Debug.Log("Hovered Over " + item.title);
+                //itemTitle.HideText(false);
+                //itemTitle.UpdateText(item.title);
+
+                TooltipSystem.Show(item.title);
+            });
+
         }
 
       }
 
     public void OnPointerExit(PointerEventData eventData) {
         if(item != null) {
-            itemTitle.HideText(true);
+            //itemTitle.HideText(true);
+            TooltipSystem.Hide();
         }
 
     }
