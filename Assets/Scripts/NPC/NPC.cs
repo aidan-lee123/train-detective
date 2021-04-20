@@ -39,13 +39,21 @@ public class NPC : MonoBehaviour
 
         InitializeStateMachine();
 
+        /*
         if (scriptToLoad != null) {
             DialogueRunner.AddScript(scriptToLoad);
         }
+        */
     }
 
     private void Update() {
 
+    }
+
+    public void AddScriptToDialogue() {
+        if (scriptToLoad != null) {
+            DialogueRunner.AddScript(scriptToLoad);
+        }
     }
 
     private void InitializeStateMachine() {

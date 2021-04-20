@@ -1,31 +1,64 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Yarn.Unity;
+using System;
 
 public class Cabin : MonoBehaviour
 {
+    public int cabinId;
+    public string cabinName;
+
+    public CabinBounds cabinBounds;
 
     public List<GameObject> _actors = new List<GameObject>();
     public GameObject cabinSprite;
+    public List<NPC> _npcs = new List<NPC>();
 
-    private void OnTriggerEnter2D(Collider2D collision) {
+    public DialogueRunner DialogueRunner => FindObjectOfType<DialogueRunner>();
 
-        cabinSprite.SetActive(false);
-        _actors.Add(collision.gameObject);
-        Debug.Log(collision.gameObject.name + " entered " + gameObject.name);
+
+    public void CabinEnter(GameObject actor) {
+        _actors.Add(actor);
+        if (actor.GetComponent<NPC>() != null) {
+            _npcs.Add(actor.GetComponent<NPC>());
+        }
+
     }
 
-    private void OnTriggerExit2D(Collider2D collision) {
-
-        cabinSprite.SetActive(true);
-        _actors.Remove(collision.gameObject);
-        Debug.Log(collision.gameObject.name + " left " + gameObject.name);
+    public void CabinExit(GameObject actor) {
+        _actors.Remove(actor);
+        if (actor.GetComponent<NPC>() != null) {
+            _npcs.Remove(actor.GetComponent<NPC>());
+        }
     }
 
 
-    // Update is called once per frame
-    void Awake()
+    public void OnPlayerEnter(int id) {
+        if(id == cabinId) {
+            print("Player Entered " + name);
+            Array.Clear(DialogueRunner.sourceText, 0, DialogueRunner.sourceText.Length);
+            cabinSprite.SetActive(false);
+
+        }
+
+    }
+
+    public void OnPlayerExit(int id) {
+        if(id == cabinId) {
+            cabinSprite.SetActive(true);
+            print("Player Exited " + name);
+
+
+        }
+
+    }
+
+    void Start()
     {
         cabinSprite.SetActive(true);
+        CabinManager.Instance.onCabinEnter += OnPlayerEnter;
+        CabinManager.Instance.onCabinExit += OnPlayerExit;
     }
+
 }

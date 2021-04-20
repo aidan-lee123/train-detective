@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrainGenerator : MonoBehaviour
+public class TrainManager : MonoBehaviour
 {
 
     private int trainLength;
