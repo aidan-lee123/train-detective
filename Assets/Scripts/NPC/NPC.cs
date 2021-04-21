@@ -39,11 +39,11 @@ public class NPC : MonoBehaviour
 
         InitializeStateMachine();
 
-        /*
+        
         if (scriptToLoad != null) {
             DialogueRunner.AddScript(scriptToLoad);
         }
-        */
+        
     }
 
     private void Update() {
@@ -55,6 +55,8 @@ public class NPC : MonoBehaviour
             DialogueRunner.AddScript(scriptToLoad);
         }
     }
+
+
 
     private void InitializeStateMachine() {
         var states = new Dictionary<Type, BaseState>() {

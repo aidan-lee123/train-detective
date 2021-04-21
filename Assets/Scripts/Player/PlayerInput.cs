@@ -10,7 +10,12 @@ public class PlayerInput : MonoBehaviour
 
     private bool showInventory = true;
 
-    private void Awake() {
+    public float gravity = -10;
+    public float moveSpeed = 6;
+    private float moveSpeedModifier = 1f;
+    Vector3 velocity;
+
+    private void Start() {
 
         _controller = GetComponent<PlayerController>();
         
@@ -19,6 +24,21 @@ public class PlayerInput : MonoBehaviour
 
     private void Update() {
 
+        if(Input.GetKeyDown(KeyCode.LeftShift)) {
+            moveSpeedModifier = 1.5f;
+        } else if (Input.GetKeyUp(KeyCode.LeftShift)){
+            moveSpeedModifier = 1f;
+        }
+
+        if(_controller.collisions.above || _controller.collisions.below) {
+            velocity.y = 0;
+        }
+
+        Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
+        velocity.y += gravity * Time.deltaTime;
+        velocity.x = input.x * (moveSpeed * moveSpeedModifier);
+        _controller.Move(velocity);
 
         //Interacting with things
         if (Input.GetKeyDown(KeyCode.E)) {
@@ -32,10 +52,5 @@ public class PlayerInput : MonoBehaviour
 
             InventoryUI.GetComponent<UIInventory>().HideInventory(showInventory);
         }
-    }
-
-    private void FixedUpdate() {
-
-        //Debug.Log(_controller.CheckForward().name);
     }
 }

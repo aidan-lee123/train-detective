@@ -341,7 +341,7 @@ public class DialogueUILog : DialogueUIBehaviour {
     public override IEnumerator DialogueStarted() {
         Debug.Log("Dialogue starting!");
         Player.GetComponent<Animator>().SetFloat("Speed", 0);
-        Player.GetComponent<PlayerController>().Move(0);
+        //Player.GetComponent<PlayerController>().Move(0);
         // Enable the dialogue controls.
         if (dialogueContainer != null)
             dialogueContainer.SetActive(true);

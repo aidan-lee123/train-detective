@@ -37,8 +37,14 @@ public class Cabin : MonoBehaviour
     public void OnPlayerEnter(int id) {
         if(id == cabinId) {
             print("Player Entered " + name);
-            Array.Clear(DialogueRunner.sourceText, 0, DialogueRunner.sourceText.Length);
+            //Array.Clear(DialogueRunner.sourceText, 0, DialogueRunner.sourceText.Length);
             cabinSprite.SetActive(false);
+
+            foreach(NPC npc in _npcs) {
+                npc.AddScriptToDialogue();
+            }
+
+            print(DialogueRunner.sourceText.Length);
 
         }
 

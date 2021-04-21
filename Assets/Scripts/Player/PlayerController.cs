@@ -11,32 +11,39 @@ public class PlayerController : MonoBehaviour {
     private Rigidbody2D _rigidBody;
     private Timeline time;
     private BoxCollider2D playerCollider;
-
-    [Header("Inputs")]
-    //Movement Stuff
-    private Vector3 _velocity = Vector3.zero;
-    public float _movementSmoothing = 0f;
-    public float _runSpeed = 20f;
-    float _horizontalMove = 0f;
-    bool canMove = true;
-    private bool _facingRight = false;
+    public SpriteRenderer sprite;
 
     //Interaction Stuff
     public float interactionRadius = 2.0f;
 
+    [Header("Collision Info")]
     //Raycast Stuff
-    private float _rayLength = 1f;
-    private float _rayOffset = 0.5f;
-    private int _rayLayerMask;
+    public float _rayLength = 1f;
+    public LayerMask layerMask;
+    const float skinWidth = .015f;
+
+    public int horizontalRayCount = 4;
+    public int verticalRayCount = 4;
+    float horizontalRaySpacing;
+    float verticalRaySpacing;
+
+    public CollisionInfo collisions;
 
     Ray ray;
-    RaycastHit2D hit;
+    RaycastOrigins raycastOrigins;
+
+
 
     private void Awake() {
         playerCollider = GetComponent<BoxCollider2D>();
         _rigidBody = GetComponent<Rigidbody2D>();
-        _rayLayerMask = 8;
         time = GetComponent<Timeline>();
+        layerMask = LayerMask.GetMask("Environment");
+        sprite = GetComponent<SpriteRenderer>();
+    }
+
+    private void Start() {
+        CalculateRaySpacing();
     }
 
     private void Update() {
@@ -44,99 +51,85 @@ public class PlayerController : MonoBehaviour {
 
         // Remove all player control when we're in dialogue
         if (FindObjectOfType<DialogueRunner>().isDialogueRunning == true) {
-            Move(0);
+            //Move(0);
             return;
         }
-
+                          
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        MouseRay(ray, hit);
-
-    }
-
-
-    private void FixedUpdate() {
-        _horizontalMove = Input.GetAxisRaw("Horizontal") * _runSpeed;
-        if (canMove)
-            Move(_horizontalMove * Time.fixedDeltaTime);
+        MouseRay(ray);
     }
 
     #region Movement and Flipping
-    public void Move(float move) {
+    public void Move(Vector3 velocity) {
+        UpdateRaycastOrigins();
+        collisions.Reset();
 
-        Vector3 targetVelocity = new Vector2(move * 10f, _rigidBody.velocity.y);
-
-        _animator.SetFloat("Speed", Mathf.Abs(move));
-
-        time.rigidbody2D.velocity = Vector3.SmoothDamp(_rigidBody.velocity, targetVelocity, ref _velocity, _movementSmoothing);
-
-        if (move > 0 && !_facingRight) {
-            Flip();
+        if (velocity.x != 0) {
+            HorizontalCollisions(ref velocity);
         }
-        else if (move < 0 && _facingRight) {
-            Flip();
+        if (velocity.y != 0) {
+            VerticalCollisions(ref velocity);
         }
+        transform.Translate(velocity);
     }
 
-    private void Flip() {
-        _facingRight = !_facingRight;
-
-
-        if (_facingRight == true) {
-            transform.eulerAngles = new Vector3(0, -180, 0);
+    //Flip Sprite Function
+    private void Flip(float type) {
+        switch (type) {
+            case -1:
+                sprite.flipX = true;
+                break;
+            case 1:
+                sprite.flipX = false;
+                break;
         }
-        else {
-            transform.eulerAngles = new Vector3(0, 0, 0);
-        
-        }
-        /*
-        Vector3 scale = transform.localScale;
-        scale.x *= -1;
-        transform.localScale = scale;*/
     }
     #endregion
 
-    #region Obsolete Raycasts
-    public GameObject CheckForward() {
+    #region Raycasts
+    void VerticalCollisions(ref Vector3 velocity) {
 
-        Vector2 direction = new Vector2(1, 0);
-        if (!_facingRight) {
-            direction *= -1;
+        float directionY = Mathf.Sign(velocity.y);
+        float rayLength = Mathf.Abs(velocity.y) + skinWidth;
 
+
+        for (int i = 0; i < verticalRayCount; i++) {
+            Vector2 rayOrigin = (directionY == -1) ? raycastOrigins.bottomLeft : raycastOrigins.topLeft;
+            rayOrigin += Vector2.right * (verticalRaySpacing * i + velocity.x);
+            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, layerMask);
+            Debug.DrawRay(rayOrigin + Vector2.right * verticalRaySpacing * i, Vector2.up * -2, Color.red);
+
+            if (hit) {
+                velocity.y = (hit.distance - skinWidth) * directionY;
+                rayLength = hit.distance;
+
+                collisions.below = directionY == -1;
+                collisions.above = directionY == 1;
+            }
         }
-        float directionOffset = _rayOffset * direction.x;
 
-        Vector2 startingPosition = new Vector2(transform.position.x + directionOffset, transform.position.y);
-
-        RaycastHit2D hit = Physics2D.Raycast(startingPosition, direction, _rayLength, _rayLayerMask);
-
-        if (hit.collider) {
-            Debug.DrawRay(startingPosition, direction, Color.red);
-            return hit.collider.gameObject;
-        }
-
-        Debug.DrawRay(startingPosition, direction, Color.white);
-        return null;
     }
 
-    public GameObject CheckBack() {
-        Vector2 direction = new Vector2(-1, 0);
-        if (!_facingRight) {
-            direction *= -1;
+    void HorizontalCollisions(ref Vector3 velocity) {
+        float directionX = Mathf.Sign(velocity.x);
+        float rayLength = Mathf.Abs(velocity.x) + skinWidth;
+        Flip(directionX);
 
+        for (int i = 0; i < horizontalRayCount; i++) {
+            Vector2 rayOrigin = (directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;
+            rayOrigin += Vector2.up * (horizontalRaySpacing * i);
+            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, layerMask);
+
+            Debug.DrawRay(rayOrigin, Vector2.right * directionX * rayLength, Color.red);
+
+            if (hit) {
+                velocity.x = (hit.distance - skinWidth) * directionX;
+                rayLength = hit.distance;
+
+                collisions.left = directionX == -1;
+                collisions.right = directionX == 1;
+            }
         }
-        float directionOffset = _rayOffset * direction.x;
-
-        Vector2 startingPosition = new Vector2(transform.position.x + directionOffset, transform.position.y);
-
-        RaycastHit2D hit = Physics2D.Raycast(startingPosition, direction, _rayLength, _rayLayerMask);
-
-        if (hit.collider) {
-            Debug.DrawRay(startingPosition, direction, Color.red);
-            return hit.collider.gameObject;
-        }
-
-        Debug.DrawRay(startingPosition, direction, Color.white);
-        return null;
     }
     #endregion
 
@@ -171,7 +164,8 @@ public class PlayerController : MonoBehaviour {
 
     private Collider2D currentHover;
 
-    public void MouseRay(Ray ray, RaycastHit2D hit) {
+    public void MouseRay(Ray ray) {
+        RaycastHit2D hit;
         int mask = LayerMask.GetMask("Interactable");
         hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, mask);
         if (hit.collider == null) {
@@ -190,4 +184,40 @@ public class PlayerController : MonoBehaviour {
 
     #endregion
 
+    void UpdateRaycastOrigins() {
+        Bounds bounds = playerCollider.bounds;
+        bounds.Expand(skinWidth * -2);
+
+        raycastOrigins.bottomLeft = new Vector2(bounds.min.x, bounds.min.y);
+        raycastOrigins.bottomRight = new Vector2(bounds.max.x, bounds.min.y);
+        raycastOrigins.topLeft = new Vector2(bounds.min.x, bounds.max.y);
+        raycastOrigins.topRight = new Vector2(bounds.max.x, bounds.max.y);
+
+    }
+
+    void CalculateRaySpacing() {
+        Bounds bounds = playerCollider.bounds;
+        bounds.Expand(skinWidth * -2);
+
+        horizontalRayCount = Mathf.Clamp(horizontalRayCount, 2, int.MaxValue);
+        verticalRayCount = Mathf.Clamp(verticalRayCount, 2, int.MaxValue);
+
+        horizontalRaySpacing = (bounds.size.y / 2) / (horizontalRayCount - 1);
+        verticalRaySpacing = (bounds.size.x / 2) / (verticalRayCount - 1);
+    }
+
+    struct RaycastOrigins {
+        public Vector2 topLeft, topRight;
+        public Vector2 bottomLeft, bottomRight;
+    }
+
+    public struct CollisionInfo {
+        public bool above, below;
+        public bool left, right;
+
+        public void Reset() {
+            above = below = false;
+            left = right = false;
+        }
+    }
 }
