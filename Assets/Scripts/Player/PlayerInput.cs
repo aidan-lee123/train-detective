@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Chronos;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Yarn.Unity;
@@ -7,6 +8,7 @@ public class PlayerInput : MonoBehaviour
 {
     private PlayerController _controller;
     public GameObject InventoryUI;
+    private Timeline time;
 
     private bool showInventory = true;
 
@@ -18,6 +20,7 @@ public class PlayerInput : MonoBehaviour
     private void Start() {
 
         _controller = GetComponent<PlayerController>();
+        time = GetComponent<Timeline>();
         
     }
 
@@ -36,7 +39,7 @@ public class PlayerInput : MonoBehaviour
 
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
-        velocity.y += gravity * Time.deltaTime;
+        velocity.y += gravity * time.deltaTime;
         velocity.x = input.x * (moveSpeed * moveSpeedModifier);
         _controller.Move(velocity);
 

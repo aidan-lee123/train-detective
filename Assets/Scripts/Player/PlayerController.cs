@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour {
     public void Move(Vector3 velocity) {
         UpdateRaycastOrigins();
         collisions.Reset();
-
+        _animator.SetFloat("Speed", Mathf.Abs(velocity.x));
         if (velocity.x != 0) {
             HorizontalCollisions(ref velocity);
         }
@@ -97,14 +97,18 @@ public class PlayerController : MonoBehaviour {
             Vector2 rayOrigin = (directionY == -1) ? raycastOrigins.bottomLeft : raycastOrigins.topLeft;
             rayOrigin += Vector2.right * (verticalRaySpacing * i + velocity.x);
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, layerMask);
-            Debug.DrawRay(rayOrigin + Vector2.right * verticalRaySpacing * i, Vector2.up * -2, Color.red);
+
 
             if (hit) {
+                Debug.DrawRay(rayOrigin + Vector2.right * verticalRaySpacing * i, Vector2.up * -2, Color.red);
                 velocity.y = (hit.distance - skinWidth) * directionY;
                 rayLength = hit.distance;
 
                 collisions.below = directionY == -1;
                 collisions.above = directionY == 1;
+            }
+            else {
+                Debug.DrawRay(rayOrigin + Vector2.right * verticalRaySpacing * i, Vector2.up * -2, Color.white);
             }
         }
 
@@ -120,14 +124,18 @@ public class PlayerController : MonoBehaviour {
             rayOrigin += Vector2.up * (horizontalRaySpacing * i);
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, layerMask);
 
-            Debug.DrawRay(rayOrigin, Vector2.right * directionX * rayLength, Color.red);
+
 
             if (hit) {
+                Debug.DrawRay(rayOrigin, Vector2.right * directionX * rayLength, Color.red);
                 velocity.x = (hit.distance - skinWidth) * directionX;
                 rayLength = hit.distance;
 
                 collisions.left = directionX == -1;
                 collisions.right = directionX == 1;
+            }
+            else {
+                Debug.DrawRay(rayOrigin, Vector2.right * directionX * rayLength, Color.white);
             }
         }
     }
@@ -202,7 +210,7 @@ public class PlayerController : MonoBehaviour {
         horizontalRayCount = Mathf.Clamp(horizontalRayCount, 2, int.MaxValue);
         verticalRayCount = Mathf.Clamp(verticalRayCount, 2, int.MaxValue);
 
-        horizontalRaySpacing = (bounds.size.y / 2) / (horizontalRayCount - 1);
+        horizontalRaySpacing = bounds.size.y / (horizontalRayCount - 1);
         verticalRaySpacing = (bounds.size.x / 2) / (verticalRayCount - 1);
     }
 
