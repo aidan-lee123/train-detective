@@ -30,11 +30,13 @@ public class NPC : MonoBehaviour
     public Transform[] Points;
     public DialogueRunner DialogueRunner => FindObjectOfType<DialogueRunner>();
 
+    public SpriteRenderer spriteRenderer;
+
 
     public void Awake() {
         _playerMask = LayerMask.GetMask("Player");
         _npcMask = LayerMask.GetMask("NPC");
-
+        spriteRenderer = GetComponent<SpriteRenderer>();
         Physics2D.IgnoreLayerCollision(9, 10);
 
         InitializeStateMachine();
