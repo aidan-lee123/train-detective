@@ -139,6 +139,43 @@ public class PlayerController : MonoBehaviour {
             }
         }
     }
+
+    void UpdateRaycastOrigins() {
+        Bounds bounds = playerCollider.bounds;
+        bounds.Expand(skinWidth * -2);
+
+        raycastOrigins.bottomLeft = new Vector2(bounds.min.x, bounds.min.y);
+        raycastOrigins.bottomRight = new Vector2(bounds.max.x, bounds.min.y);
+        raycastOrigins.topLeft = new Vector2(bounds.min.x, bounds.max.y);
+        raycastOrigins.topRight = new Vector2(bounds.max.x, bounds.max.y);
+
+    }
+
+    void CalculateRaySpacing() {
+        Bounds bounds = playerCollider.bounds;
+        bounds.Expand(skinWidth * -2);
+
+        horizontalRayCount = Mathf.Clamp(horizontalRayCount, 2, int.MaxValue);
+        verticalRayCount = Mathf.Clamp(verticalRayCount, 2, int.MaxValue);
+
+        horizontalRaySpacing = bounds.size.y / (horizontalRayCount - 1);
+        verticalRaySpacing = (bounds.size.x / 2) / (verticalRayCount - 1);
+    }
+
+    struct RaycastOrigins {
+        public Vector2 topLeft, topRight;
+        public Vector2 bottomLeft, bottomRight;
+    }
+
+    public struct CollisionInfo {
+        public bool above, below;
+        public bool left, right;
+
+        public void Reset() {
+            above = below = false;
+            left = right = false;
+        }
+    }
     #endregion
 
     #region NPC Check
@@ -192,40 +229,4 @@ public class PlayerController : MonoBehaviour {
 
     #endregion
 
-    void UpdateRaycastOrigins() {
-        Bounds bounds = playerCollider.bounds;
-        bounds.Expand(skinWidth * -2);
-
-        raycastOrigins.bottomLeft = new Vector2(bounds.min.x, bounds.min.y);
-        raycastOrigins.bottomRight = new Vector2(bounds.max.x, bounds.min.y);
-        raycastOrigins.topLeft = new Vector2(bounds.min.x, bounds.max.y);
-        raycastOrigins.topRight = new Vector2(bounds.max.x, bounds.max.y);
-
-    }
-
-    void CalculateRaySpacing() {
-        Bounds bounds = playerCollider.bounds;
-        bounds.Expand(skinWidth * -2);
-
-        horizontalRayCount = Mathf.Clamp(horizontalRayCount, 2, int.MaxValue);
-        verticalRayCount = Mathf.Clamp(verticalRayCount, 2, int.MaxValue);
-
-        horizontalRaySpacing = bounds.size.y / (horizontalRayCount - 1);
-        verticalRaySpacing = (bounds.size.x / 2) / (verticalRayCount - 1);
-    }
-
-    struct RaycastOrigins {
-        public Vector2 topLeft, topRight;
-        public Vector2 bottomLeft, bottomRight;
-    }
-
-    public struct CollisionInfo {
-        public bool above, below;
-        public bool left, right;
-
-        public void Reset() {
-            above = below = false;
-            left = right = false;
-        }
-    }
 }

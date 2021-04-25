@@ -8,13 +8,14 @@ using Yarn.Unity;
 
 public class GoToState : BaseState {
     private Vector2 _destination;
-    private NPC _npc;
+    private NPC npc;
+    private NPCController controller;
 
     private Vector3 _velocity = Vector3.zero;
     private float _movementSmoothing = 0f;
 
     //private int _destPoint = 0;
-    private Transform _target;
+    private Vector2 target;
     private Rigidbody2D _rigidBody;
 
     private bool _facingRight = true;
@@ -24,30 +25,18 @@ public class GoToState : BaseState {
     private Timeline time;
 
 
-    public GoToState(NPC npc, Transform target) : base(npc.gameObject) {
-        _npc = npc;
-        _target = target;
+    public GoToState(NPC _npc, Vector2 _target) : base(_npc.gameObject) {
+        npc = _npc;
+        target = _target;
         _rigidBody = npc.GetComponent<Rigidbody2D>();
         _animator = npc.GetComponent<Animator>();
         time = npc.GetComponent<Timeline>();
-
+        controller = npc.GetComponent<NPCController>();
     }
 
     public override Type Tick() {
 
-        //var followTarget = CheckForAggro();
-        /* Debug.Log(_destPoint);
-         Debug.Log(_destination + " " + transform.position); */
-        //Does it have a Destination
-        //No Give it one
-        //transform.Translate(Vector2.right * _npc.Speed * Time.deltaTime);
-
-        // Remove all player control when we're in dialogue
-
-
-
-        Move();
-        CheckForward();
+        controller.MoveTowards(target);
 
 
         return null;
@@ -57,12 +46,12 @@ public class GoToState : BaseState {
 
         //Vector2 dir = transform.position - destination.transform.position;
 
-        Vector2 targetVelocity = Vector2.right * _npc.Speed;
+        Vector2 targetVelocity = Vector2.right * npc.Speed;
 
         if (!_facingRight)
-            targetVelocity = Vector2.left * _npc.Speed;
+            targetVelocity = Vector2.left * npc.Speed;
 
-        if (_npc.DialogueRunner.isDialogueRunning == true) {
+        if (npc.DialogueRunner.isDialogueRunning == true) {
             targetVelocity = Vector3.zero;
         }
 
@@ -81,12 +70,12 @@ public class GoToState : BaseState {
 
 
 
-        RaycastHit2D wallInfo = Physics2D.Raycast(_npc.RayStart.transform.position, -direction, _rayDistance, LayerMask.GetMask("Environment"));
+        RaycastHit2D wallInfo = Physics2D.Raycast(npc.RayStart.transform.position, -direction, _rayDistance, LayerMask.GetMask("Environment"));
 
-        Debug.DrawRay(_npc.RayStart.transform.position, -direction, Color.white);
+        Debug.DrawRay(npc.RayStart.transform.position, -direction, Color.white);
 
         if (wallInfo.collider == true) {
-            Debug.DrawRay(_npc.RayStart.transform.position, -direction, Color.red);
+            Debug.DrawRay(npc.RayStart.transform.position, -direction, Color.red);
             if (_facingRight == true) {
                 _facingRight = false;
                 transform.eulerAngles = new Vector3(0, -180, 0);

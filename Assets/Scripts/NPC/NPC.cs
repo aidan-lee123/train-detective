@@ -20,7 +20,7 @@ public class NPC : MonoBehaviour
 
     public StateMachine StateMachine => GetComponent<StateMachine>();
 
-    public Transform Target { get; private set; }
+    public Transform Target;
 
     [SerializeField]
     public float Speed = 2f;
@@ -31,6 +31,8 @@ public class NPC : MonoBehaviour
     public DialogueRunner DialogueRunner => FindObjectOfType<DialogueRunner>();
 
     public SpriteRenderer spriteRenderer;
+
+    public float moveSpeed = 0.01f;
 
 
     public void Awake() {
@@ -62,7 +64,8 @@ public class NPC : MonoBehaviour
 
     private void InitializeStateMachine() {
         var states = new Dictionary<Type, BaseState>() {
-            {typeof(PatrolState), new PatrolState(this) }
+            //{typeof(PatrolState), new PatrolState(this) },
+            {typeof(GoToState), new GoToState(this, Target.position) }
         };
 
         GetComponent<StateMachine>().SetStates(states);

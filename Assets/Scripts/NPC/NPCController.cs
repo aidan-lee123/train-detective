@@ -7,7 +7,7 @@ public class NPCController : MonoBehaviour
     NPC npc;
 
     [Header("Collision Info")]
-    private BoxCollider2D npcCollider;
+    public BoxCollider2D npcCollider;
     //Raycast Stuff
     public float _rayLength = 1f;
     public LayerMask layerMask;
@@ -27,16 +27,46 @@ public class NPCController : MonoBehaviour
     void Start()
     {
         npc = GetComponent<NPC>();
+
+        npcCollider = GetComponent<BoxCollider2D>();
+
+        CalculateRaySpacing();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void Follow(Transform target) {
+        //print(Vector2.SignedAngle(transform.position, target.position));
+        float angle = Vector2.SignedAngle(transform.position, target.position);
+        float move = Mathf.Clamp(angle, -1, 1);
+        float distance = Vector2.Distance(transform.position, target.position);
+        Vector2 velocity = new Vector2(move * (npc.moveSpeed), 0);
+        //print(velocity);
+        if (distance > 0.01f) {
+            Move(velocity);
+
+        }
+        else {
+            print("MADE IT");
+        }
     }
 
+    public void MoveTowards(Vector2 target) {
+        //print(Vector2.SignedAngle(transform.position, target.position));
+        float angle = Vector2.SignedAngle(transform.position, target);
+        float move = Mathf.Clamp(angle, -1, 1);
+        float distance = Vector2.Distance(transform.position, target);
+        Vector2 velocity = new Vector2(move * (npc.moveSpeed), 0);
+        print(velocity);
+        if(distance > 0.01f) {
+            Move(velocity);
 
-    public void Move(Vector3 velocity) {
+        } else {
+            print("MADE IT");
+        }
+
+
+    }
+
+    public void Move(Vector2 velocity) {
         UpdateRaycastOrigins();
         collisions.Reset();
         if (velocity.x != 0) {
@@ -47,8 +77,6 @@ public class NPCController : MonoBehaviour
         }
         transform.Translate(velocity);
     }
-
-
 
     private void Flip(float type) {
         switch (type) {
@@ -61,7 +89,7 @@ public class NPCController : MonoBehaviour
         }
     }
 
-    void VerticalCollisions(ref Vector3 velocity) {
+    void VerticalCollisions(ref Vector2 velocity) {
 
         float directionY = Mathf.Sign(velocity.y);
         float rayLength = Mathf.Abs(velocity.y) + skinWidth;
@@ -88,7 +116,7 @@ public class NPCController : MonoBehaviour
 
     }
 
-    void HorizontalCollisions(ref Vector3 velocity) {
+    void HorizontalCollisions(ref Vector2 velocity) {
         float directionX = Mathf.Sign(velocity.x);
         float rayLength = Mathf.Abs(velocity.x) + skinWidth;
         Flip(directionX);
