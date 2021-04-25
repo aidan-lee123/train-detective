@@ -25,9 +25,8 @@ public class GoToState : BaseState {
     private Timeline time;
 
 
-    public GoToState(NPC _npc, Vector2 _target) : base(_npc.gameObject) {
+    public GoToState(NPC _npc) : base(_npc.gameObject) {
         npc = _npc;
-        target = _target;
         _rigidBody = npc.GetComponent<Rigidbody2D>();
         _animator = npc.GetComponent<Animator>();
         time = npc.GetComponent<Timeline>();
@@ -36,56 +35,7 @@ public class GoToState : BaseState {
 
     public override Type Tick() {
 
-        controller.MoveTowards(target);
-
-
+        controller.MoveTowards(npc.Target.position);
         return null;
-    }
-
-    private void Move() {
-
-        //Vector2 dir = transform.position - destination.transform.position;
-
-        Vector2 targetVelocity = Vector2.right * npc.Speed;
-
-        if (!_facingRight)
-            targetVelocity = Vector2.left * npc.Speed;
-
-        if (npc.DialogueRunner.isDialogueRunning == true) {
-            targetVelocity = Vector3.zero;
-        }
-
-        _animator.SetFloat("Speed", Mathf.Abs(targetVelocity.x));
-
-        if (_facingRight)
-            time.rigidbody2D.velocity = Vector3.SmoothDamp(_rigidBody.velocity, targetVelocity, ref _velocity, _movementSmoothing);
-        else
-            time.rigidbody2D.velocity = Vector3.SmoothDamp(_rigidBody.velocity, targetVelocity, ref _velocity, _movementSmoothing);
-    }
-
-
-    public void CheckForward() {
-
-        Vector2 direction = new Vector2(1, 0);
-
-
-
-        RaycastHit2D wallInfo = Physics2D.Raycast(npc.RayStart.transform.position, -direction, _rayDistance, LayerMask.GetMask("Environment"));
-
-        Debug.DrawRay(npc.RayStart.transform.position, -direction, Color.white);
-
-        if (wallInfo.collider == true) {
-            Debug.DrawRay(npc.RayStart.transform.position, -direction, Color.red);
-            if (_facingRight == true) {
-                _facingRight = false;
-                transform.eulerAngles = new Vector3(0, -180, 0);
-            }
-            else {
-                transform.eulerAngles = new Vector3(0, 0, 0);
-                _facingRight = true;
-            }
-
-        }
-
     }
 }

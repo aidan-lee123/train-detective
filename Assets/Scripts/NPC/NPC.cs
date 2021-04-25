@@ -60,12 +60,22 @@ public class NPC : MonoBehaviour
         }
     }
 
+    [YarnCommand("GoTo")]
+    public void GoTo(string targetName) {
+        print("GOING TO " + targetName);
+        GameObject targetObj = GameObject.Find(targetName);
+        Target = targetObj.transform;
+
+        StateMachine.SwitchToNewState(typeof(GoToState));
+    }
+
 
 
     private void InitializeStateMachine() {
         var states = new Dictionary<Type, BaseState>() {
+            {typeof(IdleState), new IdleState(this) },
+            {typeof(GoToState), new GoToState(this) },
             //{typeof(PatrolState), new PatrolState(this) },
-            {typeof(GoToState), new GoToState(this, Target.position) }
         };
 
         GetComponent<StateMachine>().SetStates(states);

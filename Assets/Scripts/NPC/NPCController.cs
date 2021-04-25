@@ -55,7 +55,7 @@ public class NPCController : MonoBehaviour
         float move = Mathf.Clamp(angle, -1, 1);
         float distance = Vector2.Distance(transform.position, target);
         Vector2 velocity = new Vector2(move * (npc.moveSpeed), 0);
-        print(velocity);
+        //print(velocity);
         if(distance > 0.01f) {
             Move(velocity);
 
