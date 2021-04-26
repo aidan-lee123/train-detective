@@ -11,6 +11,10 @@ public class Cabin : MonoBehaviour
 
     public CabinBounds cabinBounds;
 
+
+    public List<Door> doors => new List<Door>(GetComponentsInChildren<Door>());
+
+
     public List<GameObject> _actors = new List<GameObject>();
     public GameObject cabinSprite;
     public List<NPC> _npcs = new List<NPC>();

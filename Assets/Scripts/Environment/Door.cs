@@ -7,6 +7,7 @@ public class Door : MonoBehaviour
     public GameObject arrow;
     public GameObject link;
     public Collider2D bounds;
+    public bool locked;
     public float _rayLength = 2f;
     public List<GameObject> _actors = new List<GameObject>();
 
@@ -60,7 +61,16 @@ public class Door : MonoBehaviour
 
     }
 
-
+    public void Lock(bool state) {
+        switch (state) {
+            case true:
+                locked = true;
+                break;
+            case false:
+                locked = false;
+                break;
+        }
+    }
 
 
     IEnumerator DelayCinemachine(float seconds) {
