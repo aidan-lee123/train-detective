@@ -13,15 +13,31 @@ public class Node : IHeapItem<Node>
     public int gCost, hCost;
     public int fCost { get { return (gCost + hCost); } }
 
-    //parent is used to generate the path back from the goal to the starting node
+    public List<Node> neighbours = new List<Node>();
+    public string NodeName { get; set; }
+    public Door door;
+
+    //Used so that we can iterate backwards and get the route
     public Node parent;
 
-    public Node connectedNode;
-
-    public Node(bool locked, Vector3 _worldPosition) {
+    public Node(Vector3 _worldPosition, bool locked ) {
         isLocked = locked;
-
         worldPosition = _worldPosition;
+    }
+
+    public Node(Vector3 _worldPosition, Door _door, bool locked) {
+        isLocked = locked;
+        door = _door;
+        worldPosition = _worldPosition;
+    }
+
+    public Node(Vector3 _worldPosition) {
+        worldPosition = _worldPosition;
+    }
+
+    public List<Node> AddNeighbour(Node node) {
+        neighbours.Add(node);
+        return neighbours;
     }
 
     public Node FindNearest() {
@@ -48,17 +64,24 @@ public class Node : IHeapItem<Node>
         return -compare;
     }
 
-    /*
-    private void OnDrawGizmos() {
-        if (neighbours == null)
-            return;
-        Gizmos.color = new Color(0f, 0f, 0f);
-
-        foreach(var neighbour in neighbours) {
-            if(neighbour != null) {
-                Gizmos.DrawLine(transform.position, neighbour.transform.position);
-            }
-        }
+    public override int GetHashCode() {
+        return base.GetHashCode();
     }
-    */
+
+    public override bool Equals(object obj) {
+        if (obj == null) return false;
+        Node other = obj as Node;
+        if (other == null) return false;
+        return Equals(other);
+    }
+
+    public bool Equals(Node other) {
+        if (other == null) return false;
+        return (this.worldPosition.Equals(other.worldPosition));
+
+    }
+
+
+    
+
 }

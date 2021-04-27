@@ -8,6 +8,9 @@ public class PathRequestManager : MonoBehaviour
     static PathRequestManager instance;
     Queue<PathRequest> pathRequestQueue = new Queue<PathRequest>();
 
+
+    Cabin destinationCabin;
+
     private void Awake() {
         instance = this;
     }

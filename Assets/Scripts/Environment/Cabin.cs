@@ -18,9 +18,16 @@ public class Cabin : MonoBehaviour
     public List<GameObject> _actors = new List<GameObject>();
     public GameObject cabinSprite;
     public List<NPC> _npcs = new List<NPC>();
+    public List<Node> nodes = new List<Node>();
 
     public DialogueRunner DialogueRunner => FindObjectOfType<DialogueRunner>();
 
+    public bool IsNodeInCabin(Node node) {
+        if (cabinBounds.collider.bounds.Contains(node.worldPosition)) {
+            return true;
+        }
+        return false;
+    }
 
     public void CabinEnter(GameObject actor) {
         _actors.Add(actor);

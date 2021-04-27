@@ -6,10 +6,15 @@ using UnityEngine;
 public class CabinManager : MonoBehaviour
 {
 
+    private List<Cabin> cabins;
+
     public static CabinManager Instance;
 
     private void Awake() {
+        
         Instance = this;
+
+        Instance.cabins = new List<Cabin>(GameObject.FindObjectsOfType<Cabin>());
     }
 
     public event Action<int> onCabinEnter;
@@ -24,5 +29,13 @@ public class CabinManager : MonoBehaviour
         if(onCabinExit != null) {
             onCabinExit(id);
         }
+    }
+
+    public static List<Cabin> GetCabins() {
+        return Instance.cabins;
+    }
+
+    public static Cabin GetCabin(string name) {
+        return Instance.cabins.Find(x => x.cabinName == name);
     }
 }

@@ -10,12 +10,15 @@ public class Door : MonoBehaviour
     public bool locked;
     public float _rayLength = 2f;
     public List<GameObject> _actors = new List<GameObject>();
+    public Node node;
 
 
+    /*
     private void OnDrawGizmos() {
         if(link != null)
             Gizmos.DrawLine(transform.position, link.transform.position);
     }
+    */
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.E)) {

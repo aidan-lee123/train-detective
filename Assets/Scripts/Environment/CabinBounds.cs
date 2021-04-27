@@ -6,9 +6,16 @@ public class CabinBounds : MonoBehaviour
 {
     Cabin cabin;
     public int cabinId;
+    public Collider2D collider;
+
+
+    private void Awake() {
+        collider = GetComponent<Collider2D>();
+    }
 
     private void Start() {
         cabin = GetComponentInParent<Cabin>();
+       
     }
 
 
