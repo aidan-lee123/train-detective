@@ -29,6 +29,15 @@ public class Cabin : MonoBehaviour
         return false;
     }
 
+    public bool AddNode(Node node) {
+        if (!nodes.Contains(node)) {
+            nodes.Add(node);
+            return true;
+        }
+        return false;
+
+    }
+
     public void CabinEnter(GameObject actor) {
         _actors.Add(actor);
         if (actor.GetComponent<NPC>() != null) {

@@ -139,54 +139,60 @@ public class NodeManager : SerializedMonoBehaviour {
                 nodes.Add(node);
                 door.node = node;
                 node.NodeName = cabin.name + " - " + door.name;
-            }
-        }
-
-        /* TODO
-         * Rather than looping through each node we loop through each cabin's nodes so that there
-         * is less overhead. Just need to figure out how to group Nodes and Cabins together. 
-         * <Cabin, Node> Dictionary?
-         * */
-        
-        //Loop through the nodes to create links
-        foreach(Node node in nodes) {
-
-            //If a node's door has a linked door then we know that they are neighbours and can link them
-            if(node.door.link != null) {
-                node.AddNeighbour(node.door.link.GetComponent<Door>().node);
+                cabin.AddNode(node);
             }
 
-            //Otherwise loop through each node
-            foreach(Node otherNode in nodes) {
-                //Skip itself
-                if(otherNode == node) {
-                    //print(otherNode.NodeName + " equals " + node.NodeName);
-                    continue;
+            /* TODO
+             * Rather than looping through each node we loop through each cabin's nodes so that there
+             * is less overhead. Just need to figure out how to group Nodes and Cabins together. 
+             * <Cabin, Node> Dictionary?
+             * */
+
+            //Loop through the nodes to create links
+            foreach (Node node in cabin.nodes) {
+
+                //If a node's door has a linked door then we know that they are neighbours and can link them
+                if (node.door.link != null) {
+                    node.AddNeighbour(node.door.link.GetComponent<Door>().node);
                 }
-                //Linecast from the original node to the othernodes around it. If it interacts with a another door
-                //We add it as a neigbour otherwise we don't do anything
-                RaycastHit2D hit = Physics2D.Linecast(node.worldPosition, otherNode.worldPosition, layerMask);
-                if (hit) {
-                    GameObject hitGo = hit.collider.gameObject;
 
-                    //TODO
-                    //Consider changing this from layer to tag.
+                //Otherwise loop through each node
+                foreach (Node otherNode in cabin.nodes) {
+                    //Skip itself
+                    if (otherNode == node) {
+                        //print(otherNode.NodeName + " equals " + node.NodeName);
+                        continue;
+                    }
+                    //Linecast from the original node to the othernodes around it. If it interacts with a another door
+                    //We add it as a neigbour otherwise we don't do anything
+                    RaycastHit2D hit = Physics2D.Linecast(node.worldPosition, otherNode.worldPosition, layerMask);
+                    if (hit) {
+                        GameObject hitGo = hit.collider.gameObject;
 
-                    //If it hits the door layer "13"
-                    if (hitGo.layer == 13) {
+                        //TODO
+                        //Consider changing this from layer to tag.
 
-                        //Make sure that the node's neighbour list doesn't already contain this node.
-                        if (!node.neighbours.Contains(otherNode)) {
-                            //print("Node " + node.NodeName + " collided with " + hitGo.GetComponent<Door>().node.NodeName);
-                            node.AddNeighbour(hitGo.GetComponent<Door>().node);
+                        //If it hits the door layer "13"
+                        if (hitGo.layer == 13) {
+
+                            //Make sure that the node's neighbour list doesn't already contain this node.
+                            if (!node.neighbours.Contains(otherNode)) {
+                                //print("Node " + node.NodeName + " collided with " + hitGo.GetComponent<Door>().node.NodeName);
+                                node.AddNeighbour(hitGo.GetComponent<Door>().node);
+                            }
+
                         }
-
                     }
                 }
-            }
 
-            //print("Setup node " + node.NodeName);
+                //print("Setup node " + node.NodeName);
+            }
         }
+
+
+        
+
+
 
     }
 
