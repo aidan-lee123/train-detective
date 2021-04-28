@@ -5,7 +5,7 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
     public GameObject arrow;
-    public GameObject link;
+    public Door link;
     public Collider2D bounds;
     public bool locked;
     public float _rayLength = 2f;

@@ -14,7 +14,7 @@ public class Node : IHeapItem<Node>
     public int fCost { get { return (gCost + hCost); } }
 
     public List<Node> neighbours = new List<Node>();
-    public string NodeName { get; set; }
+    public string NodeName;
     public Door door;
 
     //Used so that we can iterate backwards and get the route
@@ -38,6 +38,28 @@ public class Node : IHeapItem<Node>
     public List<Node> AddNeighbour(Node node) {
         neighbours.Add(node);
         return neighbours;
+    }
+
+    public List<Node> RemoveNeighbour(Node node) {
+
+        neighbours.RemoveAll(delegate(Node n ) {
+            Debug.Log(node.worldPosition);
+            return n.worldPosition == node.worldPosition;
+        });
+        return neighbours;
+    }
+
+    public void ClearNeighbours() {
+        neighbours.Clear();
+    }
+
+    public string ListNeighbours() {
+        string s = "";
+        foreach(Node node in neighbours) {
+            s += node.NodeName + ", ";
+        }
+
+        return s;
     }
 
     public Node FindNearest() {

@@ -10,6 +10,7 @@ public class NodeManager : SerializedMonoBehaviour {
     private LayerMask layerMask;
 
     public Dictionary<Cabin, Node> nodeDictionary = new Dictionary<Cabin, Node>();
+    private Node target; 
 
     void Awake() {
         cabins = CabinManager.GetCabins();
@@ -22,12 +23,15 @@ public class NodeManager : SerializedMonoBehaviour {
     private void Start() {
 
         BuildLinks();
-
-        Vector3 test = new Vector3(-20, 4, 0);
-        NodeFromWorldspace(test);
     }
     private void Update() {
 
+    }
+    [Button("Update Target")]
+    public void UpdateTarget() {
+
+        Vector3 test = GameObject.Find("Test Target").transform.position;
+        target = NodeFromWorldspace(test);
     }
 
     /*void SetupNodes() {
@@ -118,11 +122,85 @@ public class NodeManager : SerializedMonoBehaviour {
     }*/
 
     public Node NodeFromWorldspace(Vector3 position) {
+        Cabin foundCabin = null;
+        position.z = 0;
 
         foreach(Cabin cabin in cabins) {
             if (cabin.cabinBounds.collider.bounds.Contains(position)) {
                 print(cabin.cabinName + " contains positon " + position);
+                foundCabin = cabin;
             }
+        }
+
+        /* TODO
+         * Get 2 closest nodes to each other and then remove them from each other's neighbour nodes list
+         * Maybe do this by looping through the neighbours list and if it equals the other one then remove it from both
+         * then add this new node as neighbours to both of them 
+         * That way this is slipped into the middle of both of them
+         * 
+         * So need to add in a new second node var for secondClosestNode
+         * */
+
+
+        if(foundCabin != null) {
+            float closestDist = float.MaxValue;
+            float secondDist = float.MaxValue;
+            Node closestNode = null;
+            Node secondNode = null;
+            foreach (Node node in foundCabin.nodes) {
+                Node hit = RaycastToNode(position, node.worldPosition);
+                float dist = Vector3.Distance(position, node.worldPosition);
+
+
+                if (hit == null || hit != node) {
+                    //print("Hit Null or Does Not Equal " + node.NodeName);
+                    continue;
+                }
+
+                //If there is more than one node in the cabin find both Closest and Second Closest Nodes
+                if (foundCabin.nodes.Count == 1) {
+                    //print("Only 1 Node");
+                    closestDist = dist;
+                    closestNode = node;
+                    continue;
+                }
+
+
+                if(dist < closestDist) {
+
+                    //Closest node has been updated
+                    secondDist = closestDist;
+                    secondNode = closestNode;
+                    closestDist = dist;
+                    closestNode = node;
+                    
+                }
+                //If the distance is in between the closest and second closest then update the second closest
+                else if (dist < secondDist && dist != closestDist) {
+                    secondDist = dist;
+                    secondNode = node;
+                }
+            }
+
+            Node newNode = new Node(new Vector3(position.x, closestNode.worldPosition.y, 0));
+
+            //if there is more than one node that is in LoS to this new node
+            if (secondNode != null) {
+
+                closestNode.RemoveNeighbour(secondNode);
+                closestNode.AddNeighbour(newNode);
+
+                secondNode.RemoveNeighbour(closestNode);
+                secondNode.AddNeighbour(newNode);
+
+            }
+            else {
+                closestNode.AddNeighbour(newNode);
+            }
+
+            foundCabin.AddNode(newNode);
+
+            return newNode;
         }
 
 
@@ -130,8 +208,20 @@ public class NodeManager : SerializedMonoBehaviour {
         //throw new System.NotImplementedException();
     }
 
-    void BuildLinks() {
+    public Node RaycastToNode(Vector3 pos, Vector3 node) {
 
+        RaycastHit2D hit = Physics2D.Linecast(pos, node, layerMask);
+        if (hit) {
+            
+            if(hit.collider.gameObject.layer == 13) {
+                return hit.collider.gameObject.GetComponent<Door>().node;
+            }
+        }
+        return null;
+    }
+
+    void BuildLinks() {
+        nodes = new List<Node>();
         //Foreach Cabin's doors we create the nodes.
         foreach (Cabin cabin in cabins) {
             foreach (Door door in cabin.doors) {
@@ -142,65 +232,84 @@ public class NodeManager : SerializedMonoBehaviour {
                 cabin.AddNode(node);
             }
 
-            /* TODO
-             * Rather than looping through each node we loop through each cabin's nodes so that there
-             * is less overhead. Just need to figure out how to group Nodes and Cabins together. 
-             * <Cabin, Node> Dictionary?
-             * */
-
             //Loop through the nodes to create links
             foreach (Node node in cabin.nodes) {
 
                 //If a node's door has a linked door then we know that they are neighbours and can link them
-                if (node.door.link != null) {
+                if (node.door.link != null && !node.door.locked && !node.door.link.locked) {
                     node.AddNeighbour(node.door.link.GetComponent<Door>().node);
                 }
 
                 //Otherwise loop through each node
                 foreach (Node otherNode in cabin.nodes) {
+
                     //Skip itself
                     if (otherNode == node) {
                         //print(otherNode.NodeName + " equals " + node.NodeName);
                         continue;
                     }
+
                     //Linecast from the original node to the othernodes around it. If it interacts with a another door
                     //We add it as a neigbour otherwise we don't do anything
-                    RaycastHit2D hit = Physics2D.Linecast(node.worldPosition, otherNode.worldPosition, layerMask);
-                    if (hit) {
-                        GameObject hitGo = hit.collider.gameObject;
-
-                        //TODO
-                        //Consider changing this from layer to tag.
-
-                        //If it hits the door layer "13"
-                        if (hitGo.layer == 13) {
-
-                            //Make sure that the node's neighbour list doesn't already contain this node.
-                            if (!node.neighbours.Contains(otherNode)) {
-                                //print("Node " + node.NodeName + " collided with " + hitGo.GetComponent<Door>().node.NodeName);
-                                node.AddNeighbour(hitGo.GetComponent<Door>().node);
-                            }
-
+                    Node hit = RaycastToNode(node.worldPosition, otherNode.worldPosition);
+                    if(hit != null) {
+                        //Make sure that the node's neighbour list doesn't already contain this node.
+                        if (!node.neighbours.Contains(otherNode)) {
+                            //print("Node " + node.NodeName + " collided with " + hitGo.GetComponent<Door>().node.NodeName);
+                            node.AddNeighbour(hit);
                         }
                     }
                 }
 
-                //print("Setup node " + node.NodeName);
             }
         }
 
 
-        
+        /* TODO - FIGURE OUT WHY THIS IS HAPPENING
+         * We have to do another loop through the first cabin's node's because nothing is created when it first
+         * gets initalized. That's not true though which is weird. There is also for some reason a non existant 
+         * Node that is placed at 0,0,0 that messes with the neigbour system. This node doesn't actually exist
+         * it's not in cabin's node list or being created anywhere but for some reason screws everything up.
+         * I'm not sure if this is a 0,0,0 issue or another issue. I haven't tested moving things out of the
+         * 0,0,0 range though. 
+         * */
 
+        //Foreach node in the first cabin of the list
+        foreach(Node node in cabins[0].nodes) {
 
+            //Clears the node's neighbours
+            node.ClearNeighbours();
 
+            //Does exactly the same as what we're doing above but only for the first cabin.
+            foreach(Node otherNode in cabins[0].nodes) {
+
+                //If a node's door has a linked door then we know that they are neighbours and can link them
+                if (node.door.link != null && !node.door.locked && !node.door.link.locked) {
+                    node.AddNeighbour(node.door.link.GetComponent<Door>().node);
+                }
+
+                Node hit = RaycastToNode(node.worldPosition, otherNode.worldPosition);
+                if (hit != null) {
+                    //Make sure that the node's neighbour list doesn't already contain this node.
+                    if (!node.neighbours.Contains(otherNode)) {
+                        //print("Node " + node.NodeName + " collided with " + hitGo.GetComponent<Door>().node.NodeName);
+                        node.AddNeighbour(hit);
+                    }
+                }
+            }
+
+        }
     }
 
     private void OnDrawGizmos() {
         if (nodes == null)
             return;
         foreach (Node node in nodes) {
-            Gizmos.color = Color.white;
+            if (node.neighbours.Count == 1)
+                Gizmos.color = Color.grey;
+            else
+                Gizmos.color = Color.white;
+
             Gizmos.DrawWireSphere(node.worldPosition, .2f);
             foreach(Node neighbour in node.neighbours) {
                 if(neighbour != null) {
@@ -208,6 +317,11 @@ public class NodeManager : SerializedMonoBehaviour {
                     Gizmos.DrawLine(node.worldPosition, neighbour.worldPosition);
                 }
             }
+        }
+
+        if(target != null) {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(target.worldPosition, .4f);
         }
     }
 

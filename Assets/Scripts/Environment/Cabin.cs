@@ -64,7 +64,7 @@ public class Cabin : MonoBehaviour
                 npc.AddScriptToDialogue();
             }
 
-            print(DialogueRunner.sourceText.Length);
+            //print(DialogueRunner.sourceText.Length);
 
         }
 
