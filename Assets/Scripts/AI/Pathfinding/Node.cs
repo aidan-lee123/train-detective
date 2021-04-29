@@ -10,8 +10,8 @@ public class Node : IHeapItem<Node>
     //gCost is the cost to travel from the starting node to this node
     //hCost is the heuristic estimating the cost from this node to the goal
     //In this case, hCost measures Manhattan Distance from this node to the goal
-    public int gCost, hCost;
-    public int fCost { get { return (gCost + hCost); } }
+    public float gCost, hCost;
+    public float fCost { get { return (gCost + hCost); } }
 
     public List<Node> neighbours = new List<Node>();
     public string NodeName;
@@ -43,7 +43,7 @@ public class Node : IHeapItem<Node>
     public List<Node> RemoveNeighbour(Node node) {
 
         neighbours.RemoveAll(delegate(Node n ) {
-            Debug.Log(node.worldPosition);
+            //Debug.Log(node.worldPosition);
             return n.worldPosition == node.worldPosition;
         });
         return neighbours;

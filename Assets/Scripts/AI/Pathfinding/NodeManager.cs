@@ -10,7 +10,7 @@ public class NodeManager : SerializedMonoBehaviour {
     private LayerMask layerMask;
 
     public Dictionary<Cabin, Node> nodeDictionary = new Dictionary<Cabin, Node>();
-    private Node target; 
+    private Node target = null; 
 
     void Awake() {
         cabins = CabinManager.GetCabins();
@@ -28,10 +28,10 @@ public class NodeManager : SerializedMonoBehaviour {
 
     }
     [Button("Update Target")]
-    public void UpdateTarget() {
+    public void UpdateTarget(Vector3 pos) {
 
         Vector3 test = GameObject.Find("Test Target").transform.position;
-        target = NodeFromWorldspace(test);
+        target = NodeFromWorldspace(pos);
     }
 
     /*void SetupNodes() {
@@ -127,7 +127,7 @@ public class NodeManager : SerializedMonoBehaviour {
 
         foreach(Cabin cabin in cabins) {
             if (cabin.cabinBounds.collider.bounds.Contains(position)) {
-                print(cabin.cabinName + " contains positon " + position);
+                //print(cabin.cabinName + " contains positon " + position);
                 foundCabin = cabin;
             }
         }
@@ -184,21 +184,24 @@ public class NodeManager : SerializedMonoBehaviour {
 
             Node newNode = new Node(new Vector3(position.x, closestNode.worldPosition.y, 0));
 
+            closestNode.AddNeighbour(newNode);
+            newNode.AddNeighbour(closestNode);
+
             //if there is more than one node that is in LoS to this new node
             if (secondNode != null) {
 
                 closestNode.RemoveNeighbour(secondNode);
-                closestNode.AddNeighbour(newNode);
-
                 secondNode.RemoveNeighbour(closestNode);
                 secondNode.AddNeighbour(newNode);
+                newNode.AddNeighbour(secondNode);
 
             }
-            else {
-                closestNode.AddNeighbour(newNode);
-            }
 
+
+            //print(newNode.worldPosition);
             foundCabin.AddNode(newNode);
+            nodes.Add(newNode);
+
 
             return newNode;
         }
@@ -220,7 +223,7 @@ public class NodeManager : SerializedMonoBehaviour {
         return null;
     }
 
-    void BuildLinks() {
+    public void BuildLinks() {
         nodes = new List<Node>();
         //Foreach Cabin's doors we create the nodes.
         foreach (Cabin cabin in cabins) {
@@ -321,7 +324,7 @@ public class NodeManager : SerializedMonoBehaviour {
 
         if(target != null) {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(target.worldPosition, .4f);
+            //Gizmos.DrawWireSphere(target.worldPosition, .4f);
         }
     }
 

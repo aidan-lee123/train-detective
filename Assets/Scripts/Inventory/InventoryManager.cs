@@ -19,7 +19,7 @@ public class InventoryManager : MonoBehaviour
         Item itemToAdd = itemDatabase.GetItem(id);
         characterItems.Add(itemToAdd);
         inventoryUI.AddNewItem(itemToAdd);
-        Debug.Log("Added Item: " + itemToAdd.title);
+        //Debug.Log("Added Item: " + itemToAdd.title);
     }
 
     public void GiveItem(string name) {
