@@ -70,7 +70,6 @@ public class NPC : MonoBehaviour
     }
 
 
-
     private void InitializeStateMachine() {
         var states = new Dictionary<Type, BaseState>() {
             {typeof(IdleState), new IdleState(this) },

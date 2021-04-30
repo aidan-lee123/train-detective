@@ -49,6 +49,12 @@ public class NPCController : MonoBehaviour
         }
     }
 
+    public void TraverseDoor(Door currentDoor, float speed) {
+        Door linkedDoor = currentDoor.link;
+
+        transform.position = Vector3.MoveTowards(transform.position, linkedDoor.transform.position, speed * Time.deltaTime);
+    }
+
     public void MoveTowards(Vector2 target) {
         //print(Vector2.SignedAngle(transform.position, target.position));
         float angle = Vector2.SignedAngle(transform.position, target);
