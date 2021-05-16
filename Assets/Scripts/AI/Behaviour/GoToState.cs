@@ -42,6 +42,9 @@ public class GoToState : BaseState {
     IEnumerator FollowPath() {
         Vector3 currentWaypoint = path[0];
         Debug.Log("Beginning Follow Path");
+
+        //Check if the next node has a linked door and its link is not the current node
+
         while (true) {
             if (transform.position == currentWaypoint) {
                 targetIndex++;
@@ -66,6 +69,7 @@ public class GoToState : BaseState {
         Debug.Log("Path Found");
         if (pathSuccessful) {
             path = newPath;
+            npc.path = newPath;
             /*
             StopCoroutine("FollowPath");
             StartCoroutine("FollowPath");
@@ -81,4 +85,6 @@ public class GoToState : BaseState {
         }
 
     }
+
+
 }

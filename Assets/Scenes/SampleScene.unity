@@ -2725,10 +2725,9 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 22.38, y: -1, z: -0.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 825938814}
+  m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &409672339
 GameObject:
@@ -3045,7 +3044,7 @@ Transform:
   - {fileID: 5951192856828139938}
   - {fileID: 1097226501}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &495454393
 GameObject:
@@ -5067,11 +5066,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 787279885}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -17.51, y: -1, z: 0}
+  m_LocalPosition: {x: -18.87, y: 3.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &808924208
 GameObject:
@@ -5182,13 +5181,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 825938813}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12.29, y: -0.55, z: 0}
+  m_LocalPosition: {x: 10.089999, y: -1.55, z: -0.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2048427354}
   - {fileID: 419654266}
-  m_Father: {fileID: 409205867}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &825938815
 BoxCollider2D:
@@ -5323,12 +5322,13 @@ MonoBehaviour:
   _characterName: Woman
   talkToNode: Woman
   scriptToLoad: {fileID: 4900000, guid: 6ca9ce95dec45954da1189f58879a655, type: 3}
-  Target: {fileID: 898853912}
+  Target: {fileID: 787279886}
   Speed: 3
   RayStart: {fileID: 2048427353}
   Points:
   - {fileID: 0}
   - {fileID: 0}
+  path: []
   spriteRenderer: {fileID: 0}
   moveSpeed: 0.02
 --- !u!114 &825938820
@@ -5760,7 +5760,7 @@ Transform:
   - {fileID: 349403185}
   - {fileID: 38311126}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &884306355
 GameObject:
@@ -6167,7 +6167,7 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &898853913
 BoxCollider2D:
@@ -6390,7 +6390,7 @@ Transform:
   - {fileID: 285826226}
   - {fileID: 179256285}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &911043102
 GameObject:
@@ -8480,7 +8480,6 @@ Transform:
   - {fileID: 2037085615}
   - {fileID: 897614414}
   - {fileID: 409672340}
-  - {fileID: 2097651627}
   m_Father: {fileID: 393801128}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9412,7 +9411,7 @@ Transform:
   m_Children:
   - {fileID: 977810086}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1438888659
 MonoBehaviour:
@@ -12460,36 +12459,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 3}
   m_EdgeRadius: 0
---- !u!1 &2097651626
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2097651627}
-  m_Layer: 0
-  m_Name: YarnTarget
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2097651627
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2097651626}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.08, y: -1.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1305644123}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2118047085
 GameObject:
   m_ObjectHideFlags: 0

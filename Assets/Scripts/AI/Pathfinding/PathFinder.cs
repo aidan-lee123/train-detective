@@ -22,11 +22,14 @@ public class PathFinder : MonoBehaviour
     }
 
     IEnumerator FindPath(Vector3 startPos, Vector3 endPos) {
+
         System.Diagnostics.Stopwatch sw = new Stopwatch();
         sw.Start();
 
         Vector3[] waypoints = new Vector3[0];
         bool pathSuccess = false;
+        Debug.Log("StartPos: " + startPos);
+        Debug.Log("EndPos: " + endPos);
 
         Node startNode = nodeManager.NodeFromWorldspace(startPos);
         Node targetNode = nodeManager.NodeFromWorldspace(endPos);
@@ -55,6 +58,7 @@ public class PathFinder : MonoBehaviour
                 }
 
                 foreach(Node neighbour in currentNode.neighbours) {
+
                     if(neighbour.isLocked || closedSet.Contains(neighbour)) {
                         //Debug.Log("Neighbour is locked or in closed set");
                         continue;
@@ -95,6 +99,8 @@ public class PathFinder : MonoBehaviour
             current = current.parent;
         }
 
+        path.Add(start);
+        start.parent = current;
 
         //and flip it so the next node in the path is at [0]
         Vector3[] waypoints = SimplifyPath(path);

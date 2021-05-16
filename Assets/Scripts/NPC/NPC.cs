@@ -28,6 +28,8 @@ public class NPC : MonoBehaviour
 
 
     public Transform[] Points;
+    public Vector3[] path;
+    int targetIndex;
     public DialogueRunner DialogueRunner => FindObjectOfType<DialogueRunner>();
 
     public SpriteRenderer spriteRenderer;
@@ -66,6 +68,8 @@ public class NPC : MonoBehaviour
         GameObject targetObj = GameObject.Find(targetName);
         Target = targetObj.transform;
 
+        //print(Target.position);
+
         StateMachine.SwitchToNewState(typeof(GoToState));
     }
 
@@ -86,6 +90,22 @@ public class NPC : MonoBehaviour
 
     public Transform[] GetPoints() {
         return Points;
+    }
+
+    public void OnDrawGizmos() {
+
+        if (path != null) {
+            for (int i = targetIndex; i < path.Length; i++) {
+                Gizmos.color = Color.black;
+                Gizmos.DrawCube(path[i], Vector3.one);
+                if (i == targetIndex) {
+                    Gizmos.DrawLine(transform.position, path[i]);
+                }
+                else {
+                    Gizmos.DrawLine(path[i - 1], path[i]);
+                }
+            }
+        }
     }
 
 }

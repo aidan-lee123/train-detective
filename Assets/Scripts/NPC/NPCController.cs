@@ -52,6 +52,8 @@ public class NPCController : MonoBehaviour
     public void TraverseDoor(Door currentDoor, float speed) {
         Door linkedDoor = currentDoor.link;
 
+        //PLAY ANIMATION, DELAY HOWEVER LONG, TELEPORT NPC
+
         transform.position = Vector3.MoveTowards(transform.position, linkedDoor.transform.position, speed * Time.deltaTime);
     }
 

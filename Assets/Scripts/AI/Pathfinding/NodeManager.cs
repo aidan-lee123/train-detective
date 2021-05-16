@@ -183,6 +183,7 @@ public class NodeManager : SerializedMonoBehaviour {
             }
 
             Node newNode = new Node(new Vector3(position.x, closestNode.worldPosition.y, 0));
+            newNode.NodeName = (foundCabin.cabinName + " - " + foundCabin.nodes.Count);
 
             closestNode.AddNeighbour(newNode);
             newNode.AddNeighbour(closestNode);
@@ -202,7 +203,7 @@ public class NodeManager : SerializedMonoBehaviour {
             foundCabin.AddNode(newNode);
             nodes.Add(newNode);
 
-
+            print("Created New Node, " + newNode.NodeName + ", at position: " + newNode.worldPosition);
             return newNode;
         }
 
