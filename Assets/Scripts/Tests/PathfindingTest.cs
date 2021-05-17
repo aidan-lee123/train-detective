@@ -6,7 +6,7 @@ public class PathfindingTest : MonoBehaviour
 {
     bool isWalking = false;
 
-    Vector3[] path;
+    Node[] path;
     int targetIndex;
     public float walkSpeed = 5f;
     NodeManager nodeManager;
@@ -46,7 +46,7 @@ public class PathfindingTest : MonoBehaviour
         isWalking = true;
     }
 
-    public void OnPathFound(Vector3[] newPath, bool pathSuccessful) {
+    public void OnPathFound(Node[] newPath, bool pathSuccessful) {
         print("Path Found");
         if (pathSuccessful) {
             path = newPath;
@@ -62,21 +62,21 @@ public class PathfindingTest : MonoBehaviour
     }
 
     IEnumerator FollowPath() {
-        Vector3 currentWaypoint = path[0];
+        Node currentNode = path[0];
         Debug.Log("Beginning Follow Path");
         while (true) {
-            if (transform.position == currentWaypoint) {
+            if (transform.position == currentNode.worldPosition) {
                 targetIndex++;
                 if (targetIndex >= path.Length) {
                     targetIndex = 0;
-                    path = new Vector3[0];
+                    path = new Node[0];
                     yield break;
                 }
 
-                currentWaypoint = path[targetIndex];
+                currentNode = path[targetIndex];
             }
 
-            transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, walkSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, currentNode.worldPosition, walkSpeed * Time.deltaTime);
 
 
             yield return null;
@@ -93,12 +93,12 @@ public class PathfindingTest : MonoBehaviour
         if (path != null) {
             for (int i = targetIndex; i < path.Length; i++) {
                 Gizmos.color = Color.black;
-                Gizmos.DrawCube(path[i], Vector3.one);
+                Gizmos.DrawCube(path[i].worldPosition, Vector3.one);
                 if (i == targetIndex) {
-                    Gizmos.DrawLine(transform.position, path[i]);
+                    Gizmos.DrawLine(transform.position, path[i].worldPosition);
                 }
                 else {
-                    Gizmos.DrawLine(path[i - 1], path[i]);
+                    Gizmos.DrawLine(path[i - 1].worldPosition, path[i].worldPosition);
                 }
             }
         }

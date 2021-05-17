@@ -28,7 +28,7 @@ public class NPC : MonoBehaviour
 
 
     public Transform[] Points;
-    public Vector3[] path;
+    public Node[] path;
     int targetIndex;
     public DialogueRunner DialogueRunner => FindObjectOfType<DialogueRunner>();
 
@@ -97,12 +97,12 @@ public class NPC : MonoBehaviour
         if (path != null) {
             for (int i = targetIndex; i < path.Length; i++) {
                 Gizmos.color = Color.black;
-                Gizmos.DrawCube(path[i], Vector3.one);
+                Gizmos.DrawCube(path[i].worldPosition, Vector3.one);
                 if (i == targetIndex) {
-                    Gizmos.DrawLine(transform.position, path[i]);
+                    Gizmos.DrawLine(transform.position, path[i].worldPosition);
                 }
                 else {
-                    Gizmos.DrawLine(path[i - 1], path[i]);
+                    Gizmos.DrawLine(path[i - 1].worldPosition, path[i].worldPosition);
                 }
             }
         }

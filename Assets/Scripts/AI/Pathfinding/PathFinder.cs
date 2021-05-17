@@ -26,7 +26,7 @@ public class PathFinder : MonoBehaviour
         System.Diagnostics.Stopwatch sw = new Stopwatch();
         sw.Start();
 
-        Vector3[] waypoints = new Vector3[0];
+        Node[] waypoints = new Node[0];
         bool pathSuccess = false;
         Debug.Log("StartPos: " + startPos);
         Debug.Log("EndPos: " + endPos);
@@ -90,7 +90,7 @@ public class PathFinder : MonoBehaviour
         requestManager.FinishedProcessingPath(waypoints, pathSuccess);
     }
 
-    public Vector3[] MakePath(Node start, Node end) {
+    public Node[] MakePath(Node start, Node end) {
         List<Node> path = new List<Node>();
         Node current = end;
 
@@ -103,21 +103,21 @@ public class PathFinder : MonoBehaviour
         start.parent = current;
 
         //and flip it so the next node in the path is at [0]
-        Vector3[] waypoints = SimplifyPath(path);
+        Node[] waypoints = SimplifyPath(path);
         Array.Reverse(waypoints);
 
         return waypoints;
     }
 
-    Vector3[] SimplifyPath(List<Node> path) {
-        List<Vector3> waypoints = new List<Vector3>();
+    Node[] SimplifyPath(List<Node> path) {
+        List<Node> waypoints = new List<Node>();
         Vector2 directionOld = Vector2.zero;
 
         for (int i = 1; i < path.Count; i++) {
             Vector2 directionNew = new Vector2(path[i - 1].worldPosition.x - path[i].worldPosition.x, path[i - 1].worldPosition.y - path[i].worldPosition.y);
 
             if (directionNew != directionOld) {
-                waypoints.Add(path[i - 1].worldPosition);
+                waypoints.Add(path[i - 1]);
             }
             directionOld = directionNew;
         }

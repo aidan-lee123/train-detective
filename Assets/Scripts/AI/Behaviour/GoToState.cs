@@ -14,7 +14,7 @@ public class GoToState : BaseState {
     bool requestedPath = false;
 
     //private int _destPoint = 0;
-    private Vector3[] path;
+    private Node[] path;
     private Vector3 target;
 
 
@@ -40,24 +40,24 @@ public class GoToState : BaseState {
     }
 
     IEnumerator FollowPath() {
-        Vector3 currentWaypoint = path[0];
+        Node currentNode = path[0];
         Debug.Log("Beginning Follow Path");
 
         //Check if the next node has a linked door and its link is not the current node
 
         while (true) {
-            if (transform.position == currentWaypoint) {
+            if (transform.position == currentNode.worldPosition) {
                 targetIndex++;
                 if (targetIndex >= path.Length) {
                     targetIndex = 0;
-                    path = new Vector3[0];
+                    path = new Node[0];
                     yield break;
                 }
 
-                currentWaypoint = path[targetIndex];
+                currentNode = path[targetIndex];
             }
 
-            controller.MoveTowards(currentWaypoint);
+            controller.MoveTowards(currentNode.worldPosition);
 
 
             yield return null;
@@ -65,7 +65,7 @@ public class GoToState : BaseState {
     }
 
 
-    public void PathFound(Vector3[] newPath, bool pathSuccessful) {
+    public void PathFound(Node[] newPath, bool pathSuccessful) {
         Debug.Log("Path Found");
         if (pathSuccessful) {
             path = newPath;
