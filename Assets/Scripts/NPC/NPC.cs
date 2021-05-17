@@ -25,7 +25,7 @@ public class NPC : MonoBehaviour
     [SerializeField]
     public float Speed = 2f;
     public GameObject RayStart;
-
+    private NPCController controller;
 
     public Transform[] Points;
     public Node[] path;
@@ -41,6 +41,7 @@ public class NPC : MonoBehaviour
         _playerMask = LayerMask.GetMask("Player");
         _npcMask = LayerMask.GetMask("NPC");
         spriteRenderer = GetComponent<SpriteRenderer>();
+        controller = GetComponent<NPCController>();
         Physics2D.IgnoreLayerCollision(9, 10);
 
         InitializeStateMachine();
@@ -90,6 +91,60 @@ public class NPC : MonoBehaviour
 
     public Transform[] GetPoints() {
         return Points;
+    }
+
+    public void FollowPath(Node[] _path, bool pathSuccessful) {
+
+        if (pathSuccessful) {
+            path = _path;
+
+
+            StopCoroutine("NavigatePath");
+            StartCoroutine("NavigatePath");
+            //isWalking = false;
+            
+        }
+        else {
+            Debug.Log("Could not Path to Node");
+            
+            StopCoroutine("NavigatePath");
+            //isWalking = false;
+            
+        }
+    }
+
+    IEnumerator NavigatePath() {
+        Node currentNode = path[0];
+        Debug.Log("Beginning Follow Path");
+
+        //Check if the next node has a linked door and its link is not the current node
+
+        while (true) {
+            //Debug.Log(Vector2.Distance(transform.position, currentNode.worldPosition));
+            if (Vector2.Distance(transform.position, currentNode.worldPosition) < 0.1f) {
+                targetIndex++;
+
+                if (currentNode.door != null) {
+                    print("currentNode door is not null");
+                    controller.TraverseDoor(currentNode.door, currentNode.door.link, 5f);
+                    targetIndex++;
+                }
+
+
+                if (targetIndex >= path.Length) {
+                    targetIndex = 0;
+                    path = new Node[0];
+                    yield break;
+                }
+
+                currentNode = path[targetIndex];
+            }
+
+            controller.MoveTowards(currentNode.worldPosition);
+
+
+            yield return null;
+        }
     }
 
     public void OnDrawGizmos() {

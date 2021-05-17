@@ -49,12 +49,12 @@ public class NPCController : MonoBehaviour
         }
     }
 
-    public void TraverseDoor(Door currentDoor, float speed) {
+    public void TraverseDoor(Door currentDoor, Door targetDoor, float speed) {
         Door linkedDoor = currentDoor.link;
-
+        print("TRAVERSE DOOR");
         //PLAY ANIMATION, DELAY HOWEVER LONG, TELEPORT NPC
-
-        transform.position = Vector3.MoveTowards(transform.position, linkedDoor.transform.position, speed * Time.deltaTime);
+        transform.position = targetDoor.transform.position;
+        //transform.position = Vector3.MoveTowards(transform.position, linkedDoor.transform.position, speed * Time.deltaTime);
     }
 
     public void MoveTowards(Vector2 target) {
@@ -73,6 +73,7 @@ public class NPCController : MonoBehaviour
 
 
     }
+
 
     public void Move(Vector2 velocity) {
         UpdateRaycastOrigins();

@@ -33,56 +33,17 @@ public class GoToState : BaseState {
             PathRequestManager.RequestPath(npc.transform.position, npc.Target.position, PathFound);
             requestedPath = true;
         }
-
-
-        //controller.MoveTowards(npc.Target.position);
         return null;
     }
 
-    IEnumerator FollowPath() {
-        Node currentNode = path[0];
-        Debug.Log("Beginning Follow Path");
 
-        //Check if the next node has a linked door and its link is not the current node
-
-        while (true) {
-            if (transform.position == currentNode.worldPosition) {
-                targetIndex++;
-                if (targetIndex >= path.Length) {
-                    targetIndex = 0;
-                    path = new Node[0];
-                    yield break;
-                }
-
-                currentNode = path[targetIndex];
-            }
-
-            controller.MoveTowards(currentNode.worldPosition);
-
-
-            yield return null;
-        }
-    }
 
 
     public void PathFound(Node[] newPath, bool pathSuccessful) {
         Debug.Log("Path Found");
-        if (pathSuccessful) {
-            path = newPath;
-            npc.path = newPath;
-            /*
-            StopCoroutine("FollowPath");
-            StartCoroutine("FollowPath");
-            isWalking = false;
-            */
-        }
-        else {
-            Debug.Log("Could not Path to Node");
-            /*
-            StopCoroutine("FollowPath");
-            isWalking = false;
-            */
-        }
+        path = newPath;
+        npc.FollowPath(newPath, pathSuccessful);
+
 
     }
 

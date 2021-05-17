@@ -5181,7 +5181,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 825938813}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.089999, y: -1.55, z: -0.09}
+  m_LocalPosition: {x: 10.089999, y: -1.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2048427354}
@@ -5328,9 +5328,8 @@ MonoBehaviour:
   Points:
   - {fileID: 0}
   - {fileID: 0}
-  path: []
   spriteRenderer: {fileID: 0}
-  moveSpeed: 0.02
+  moveSpeed: 0.01
 --- !u!114 &825938820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8333,7 +8332,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1279685693}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 16.29, y: 4.51, z: 0}
+  m_LocalPosition: {x: 16.32, y: 4.51, z: 0}
   m_LocalScale: {x: 0.5, y: 5.1336184, z: 1}
   m_Children: []
   m_Father: {fileID: 1745695723}
