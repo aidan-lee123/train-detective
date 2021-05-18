@@ -56,7 +56,7 @@ public class Cabin : MonoBehaviour
 
     public void OnPlayerEnter(int id) {
         if(id == cabinId) {
-            print("Player Entered " + name);
+            //print("Player Entered " + name);
             //Array.Clear(DialogueRunner.sourceText, 0, DialogueRunner.sourceText.Length);
             cabinSprite.SetActive(false);
 
@@ -73,7 +73,7 @@ public class Cabin : MonoBehaviour
     public void OnPlayerExit(int id) {
         if(id == cabinId) {
             cabinSprite.SetActive(true);
-            print("Player Exited " + name);
+            //print("Player Exited " + name);
 
 
         }

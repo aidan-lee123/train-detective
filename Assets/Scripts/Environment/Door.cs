@@ -33,13 +33,13 @@ public class Door : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision) {
         DisplayArrow();
         _actors.Add(collision.gameObject);
-        Debug.Log(collision.gameObject.name + " entered " + gameObject.name);
+        //Debug.Log(collision.gameObject.name + " entered " + gameObject.name);
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
         HideArrow();
         _actors.Remove(collision.gameObject);
-        Debug.Log(collision.gameObject.name + " left " + gameObject.name);
+        //ebug.Log(collision.gameObject.name + " left " + gameObject.name);
     }
 
     public void DisplayArrow() {

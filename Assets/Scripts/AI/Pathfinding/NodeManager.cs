@@ -232,7 +232,7 @@ public class NodeManager : SerializedMonoBehaviour {
                 Node node = new Node(door.transform.position, door, door.locked);
                 nodes.Add(node);
                 door.node = node;
-                node.NodeName = cabin.name + " - " + door.name;
+                node.NodeName = cabin.cabinName + " - " + door.name;
                 cabin.AddNode(node);
             }
 

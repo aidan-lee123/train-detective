@@ -58,13 +58,19 @@ public class NPCController : MonoBehaviour
     }
 
     public void MoveTowards(Vector2 target) {
-        //print(Vector2.SignedAngle(transform.position, target.position));
-        float angle = Vector2.SignedAngle(transform.position, target);
-        float move = Mathf.Clamp(angle, -1, 1);
+        //Get the location of the node in relation to the current NPC (transform)
+        Vector2 targetRelative = transform.InverseTransformPoint(target);
+
+        //If it is Negative it will be -1 if it is positive it will be 1
+        float move = Mathf.Sign(targetRelative.x);
+
+
         float distance = Vector2.Distance(transform.position, target);
         Vector2 velocity = new Vector2(move * (npc.moveSpeed), 0);
+
+        //print("Heading to " + target + " with move of " + move);
         //print(velocity);
-        if(distance > 0.01f) {
+        if (distance > 0.2f) {
             Move(velocity);
 
         } else {

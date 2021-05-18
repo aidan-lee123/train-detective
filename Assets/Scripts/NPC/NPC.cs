@@ -114,30 +114,37 @@ public class NPC : MonoBehaviour
     }
 
     IEnumerator NavigatePath() {
+        Vector2 previousPosition = transform.position;
         Node currentNode = path[0];
+        Node nextNode = path[1];
         Debug.Log("Beginning Follow Path");
 
         //Check if the next node has a linked door and its link is not the current node
 
         while (true) {
             //Debug.Log(Vector2.Distance(transform.position, currentNode.worldPosition));
-            if (Vector2.Distance(transform.position, currentNode.worldPosition) < 0.1f) {
-                targetIndex++;
-
-                if (currentNode.door != null) {
+            if (Vector2.Distance(transform.position, currentNode.worldPosition) < 0.2f) {
+                Debug.Log("Just Arrived at: " + currentNode.NodeName);
+                Debug.Log("Parent Node is: " + currentNode.parent.NodeName);
+                if (currentNode.door != null && currentNode.door.link == nextNode.door) {
                     print("currentNode door is not null");
                     controller.TraverseDoor(currentNode.door, currentNode.door.link, 5f);
-                    targetIndex++;
                 }
 
-
+                targetIndex++;
                 if (targetIndex >= path.Length) {
                     targetIndex = 0;
                     path = new Node[0];
                     yield break;
                 }
-
+                previousPosition = currentNode.worldPosition;
                 currentNode = path[targetIndex];
+                if (path.Length - 1 > targetIndex + 1)
+                    nextNode = path[targetIndex+1];
+
+
+
+                Debug.Log("Heading To: " + currentNode.NodeName);
             }
 
             controller.MoveTowards(currentNode.worldPosition);
@@ -152,6 +159,8 @@ public class NPC : MonoBehaviour
         if (path != null) {
             for (int i = targetIndex; i < path.Length; i++) {
                 Gizmos.color = Color.black;
+                UnityEditor.Handles.Label(new Vector3(path[i].worldPosition.x - Vector3.one.x, path[i].worldPosition.y + 1), path[i].NodeName);
+                UnityEditor.Handles.Label(new Vector3(path[i].worldPosition.x - Vector3.one.x, path[i].worldPosition.y + 1.3f), path[i].worldPosition.ToString());
                 Gizmos.DrawCube(path[i].worldPosition, Vector3.one);
                 if (i == targetIndex) {
                     Gizmos.DrawLine(transform.position, path[i].worldPosition);
