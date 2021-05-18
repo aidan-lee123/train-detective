@@ -32,7 +32,6 @@ Woman: Not really.
 Woman: Same old nebula, doing the same old thing.
 Woman: Oh, Ship wanted to see you. Go say hi to it.
 <<set $should_see_ship to true>>
-<<if visited("Ship") is true>>
     Player: Already done!
     Woman Go say hi again.
 <<endif>>

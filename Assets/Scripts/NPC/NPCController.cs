@@ -53,7 +53,8 @@ public class NPCController : MonoBehaviour
         Door linkedDoor = currentDoor.link;
         print("TRAVERSE DOOR");
         //PLAY ANIMATION, DELAY HOWEVER LONG, TELEPORT NPC
-        transform.position = targetDoor.transform.position;
+        currentDoor.MoveCharacter(gameObject);
+        //transform.position = targetDoor.transform.position;
         //transform.position = Vector3.MoveTowards(transform.position, linkedDoor.transform.position, speed * Time.deltaTime);
     }
 
