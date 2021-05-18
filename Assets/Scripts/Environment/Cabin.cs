@@ -23,7 +23,7 @@ public class Cabin : MonoBehaviour
     public DialogueRunner DialogueRunner => FindObjectOfType<DialogueRunner>();
 
     public bool IsNodeInCabin(Node node) {
-        if (cabinBounds.collider.bounds.Contains(node.worldPosition)) {
+        if (cabinBounds.cabinCollider.bounds.Contains(node.worldPosition)) {
             return true;
         }
         return false;
@@ -61,7 +61,7 @@ public class Cabin : MonoBehaviour
             cabinSprite.SetActive(false);
 
             foreach(NPC npc in _npcs) {
-                npc.AddScriptToDialogue();
+                //npc.AddScriptToDialogue();
             }
 
             //print(DialogueRunner.sourceText.Length);

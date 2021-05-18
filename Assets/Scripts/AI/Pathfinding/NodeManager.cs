@@ -126,7 +126,7 @@ public class NodeManager : SerializedMonoBehaviour {
         position.z = 0;
 
         foreach(Cabin cabin in cabins) {
-            if (cabin.cabinBounds.collider.bounds.Contains(position)) {
+            if (cabin.cabinBounds.cabinCollider.bounds.Contains(position)) {
                 //print(cabin.cabinName + " contains positon " + position);
                 foundCabin = cabin;
             }

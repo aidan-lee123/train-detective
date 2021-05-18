@@ -57,11 +57,6 @@ public class NPC : MonoBehaviour
 
     }
 
-    public void AddScriptToDialogue() {
-        if (scriptToLoad != null) {
-            DialogueRunner.AddScript(scriptToLoad);
-        }
-    }
 
     [YarnCommand("GoTo")]
     public void GoTo(string targetName) {

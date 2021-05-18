@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PathfindingTest : MonoBehaviour
 {
-    bool isWalking = false;
 
     Node[] path;
     int targetIndex;
@@ -43,7 +42,6 @@ public class PathfindingTest : MonoBehaviour
         position = currentPos;
 
         PathRequestManager.RequestPath(currentPos, targetPos, OnPathFound);
-        isWalking = true;
     }
 
     public void OnPathFound(Node[] newPath, bool pathSuccessful) {
@@ -52,12 +50,10 @@ public class PathfindingTest : MonoBehaviour
             path = newPath;
             StopCoroutine("FollowPath");
             StartCoroutine("FollowPath");
-            isWalking = false;
         }
         else {
             Debug.Log("Could not Path to Node");
             StopCoroutine("FollowPath");
-            isWalking = false;
         }
     }
 

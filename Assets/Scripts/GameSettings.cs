@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameSettings : MonoBehaviour {
+    /*
     [SerializeField]
     private ItemDatabase itemDatabase;
 
     public static ItemDatabase ItemDatabase => Instance.itemDatabase;
-
+    */
 
     public static GameSettings Instance { get; private set; }
 
