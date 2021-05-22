@@ -883,7 +883,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cabinId: 3
-  collider: {fileID: 0}
+  cabinCollider: {fileID: 0}
 --- !u!60 &152628812
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -2256,7 +2256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cabinId: 1
-  collider: {fileID: 0}
+  cabinCollider: {fileID: 0}
 --- !u!1 &394114520
 GameObject:
   m_ObjectHideFlags: 0
@@ -2764,7 +2764,7 @@ RectTransform:
   m_LocalScale: {x: 0.015673982, y: 0.015673982, z: 0.015673982}
   m_Children: []
   m_Father: {fileID: 825938814}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5036,7 +5036,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 787279885}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -18.87, y: 3.95, z: 0}
+  m_LocalPosition: {x: -29.02, y: 3.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5154,7 +5154,6 @@ Transform:
   m_LocalPosition: {x: 10.089999, y: -1.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2048427354}
   - {fileID: 419654266}
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -5294,10 +5293,6 @@ MonoBehaviour:
   scriptToLoad: {fileID: 4900000, guid: 6ca9ce95dec45954da1189f58879a655, type: 3}
   Target: {fileID: 787279886}
   Speed: 3
-  RayStart: {fileID: 2048427353}
-  Points:
-  - {fileID: 0}
-  - {fileID: 0}
   spriteRenderer: {fileID: 0}
   moveSpeed: 0.01
 --- !u!114 &825938820
@@ -6342,7 +6337,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ac0f9f90344a08409ad5d95c15382ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemDatabase: {fileID: 854201147}
 --- !u!4 &907846805
 Transform:
   m_ObjectHideFlags: 0
@@ -10955,7 +10949,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cabinId: 2
-  collider: {fileID: 0}
+  cabinCollider: {fileID: 0}
 --- !u!1 &1728164237
 GameObject:
   m_ObjectHideFlags: 0
@@ -12101,7 +12095,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cabinId: 2
-  collider: {fileID: 0}
+  cabinCollider: {fileID: 0}
 --- !u!60 &2037085617
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -12210,36 +12204,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2041961998}
   m_CullTransparentMesh: 0
---- !u!1 &2048427353
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2048427354}
-  m_Layer: 10
-  m_Name: Ray Start
-  m_TagString: Untagged
-  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2048427354
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2048427353}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.83, y: 0.46, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 825938814}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2062451725
 GameObject:
   m_ObjectHideFlags: 0

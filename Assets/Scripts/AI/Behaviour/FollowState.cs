@@ -19,7 +19,6 @@ public class FollowState : BaseState {
     private Rigidbody2D _rigidBody;
 
     private bool _facingRight = true;
-    private float _rayDistance = 0.5f;
     private Animator _animator;
 
     private Timeline time;
@@ -63,7 +62,7 @@ public class FollowState : BaseState {
             time.rigidbody2D.velocity = Vector3.SmoothDamp(_rigidBody.velocity, targetVelocity, ref _velocity, _movementSmoothing);
     }
 
-
+    /*
     public void CheckForward() {
 
         Vector2 direction = new Vector2(1, 0);
@@ -88,4 +87,5 @@ public class FollowState : BaseState {
         }
 
     }
+    */
 }

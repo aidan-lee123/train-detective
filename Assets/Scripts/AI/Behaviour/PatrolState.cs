@@ -18,7 +18,6 @@ public class PatrolState : BaseState {
     private Rigidbody2D _rigidBody;
 
     private bool _facingRight = true;
-    private float _rayDistance = 0.5f;
     private Animator _animator;
 
     private Timeline time;
@@ -26,7 +25,7 @@ public class PatrolState : BaseState {
 
     public PatrolState(NPC npc) : base(npc.gameObject) {
         _npc = npc;
-        _patrolPoints = _npc.GetPoints();
+        //_patrolPoints = _npc.GetPoints();
         _rigidBody = npc.GetComponent<Rigidbody2D>();
         _animator = npc.GetComponent<Animator>();
         time = npc.GetComponent<Timeline>();
@@ -47,7 +46,6 @@ public class PatrolState : BaseState {
 
 
         Move();
-        CheckForward();
 
 
         return null;
@@ -74,7 +72,7 @@ public class PatrolState : BaseState {
             time.rigidbody2D.velocity = Vector3.SmoothDamp(_rigidBody.velocity, targetVelocity, ref _velocity, _movementSmoothing);
     }
 
-
+    /*
     public void CheckForward() {
 
         Vector2 direction = new Vector2(1, 0);
@@ -98,4 +96,5 @@ public class PatrolState : BaseState {
         }
 
     }
+    */
 }

@@ -24,12 +24,13 @@ public class NPC : MonoBehaviour
 
     [SerializeField]
     public float Speed = 2f;
-    public GameObject RayStart;
     private NPCController controller;
 
-    public Transform[] Points;
+    //Pathfinding stuff
     public Node[] path;
     int targetIndex;
+    Node currentNode;
+
     public DialogueRunner DialogueRunner => FindObjectOfType<DialogueRunner>();
 
     public SpriteRenderer spriteRenderer;
@@ -84,10 +85,6 @@ public class NPC : MonoBehaviour
         Target = target;
     }
 
-    public Transform[] GetPoints() {
-        return Points;
-    }
-
     public void FollowPath(Node[] _path, bool pathSuccessful) {
 
         if (pathSuccessful) {
@@ -110,7 +107,7 @@ public class NPC : MonoBehaviour
 
     IEnumerator NavigatePath() {
         Vector2 previousPosition = transform.position;
-        Node currentNode = path[0];
+        currentNode = path[0];
         Node nextNode = path[1];
         Debug.Log("Beginning Follow Path");
 
@@ -164,6 +161,10 @@ public class NPC : MonoBehaviour
                     Gizmos.DrawLine(path[i - 1].worldPosition, path[i].worldPosition);
                 }
             }
+        }
+
+        if(currentNode != null) {
+            UnityEditor.Handles.Label(new Vector3(transform.position.x - 1.5f, transform.position.y + 1.5f), "Heading to: " + currentNode.NodeName);
         }
     }
 
