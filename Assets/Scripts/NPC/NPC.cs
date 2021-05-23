@@ -38,6 +38,7 @@ public class NPC : MonoBehaviour
     public float moveSpeed = 0.01f;
 
 
+
     public void Awake() {
         _playerMask = LayerMask.GetMask("Player");
         _npcMask = LayerMask.GetMask("NPC");
@@ -115,7 +116,7 @@ public class NPC : MonoBehaviour
 
         while (true) {
             //Debug.Log(Vector2.Distance(transform.position, currentNode.worldPosition));
-            if (Vector2.Distance(transform.position, currentNode.worldPosition) < 0.2f) {
+            if (Vector2.Distance(new Vector2(transform.position.x, currentNode.worldPosition.y), currentNode.worldPosition) < 0.1f) {
                 Debug.Log("Just Arrived at: " + currentNode.NodeName);
                 Debug.Log("Parent Node is: " + currentNode.parent.NodeName);
                 if (currentNode.door != null && currentNode.door.link == nextNode.door) {

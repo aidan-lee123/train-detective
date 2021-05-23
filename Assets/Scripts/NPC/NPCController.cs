@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Chronos;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,11 +14,13 @@ public class NPCController : MonoBehaviour
     public LayerMask layerMask;
     const float skinWidth = .015f;
 
+    public float gravity = -10f;
     public int horizontalRayCount = 4;
     public int verticalRayCount = 4;
     float horizontalRaySpacing;
     float verticalRaySpacing;
-
+    private Timeline time;
+    Vector2 velocity;
     public CollisionInfo collisions;
 
     Ray ray;
@@ -29,7 +32,7 @@ public class NPCController : MonoBehaviour
         npc = GetComponent<NPC>();
 
         npcCollider = GetComponent<BoxCollider2D>();
-
+        time = GetComponent<Timeline>();
         CalculateRaySpacing();
     }
 
@@ -58,6 +61,12 @@ public class NPCController : MonoBehaviour
         //transform.position = Vector3.MoveTowards(transform.position, linkedDoor.transform.position, speed * Time.deltaTime);
     }
 
+    IEnumerator WaitAnimationLength(AnimationClip animation) {
+
+
+        yield return new WaitForSeconds(animation.length);
+    }
+
     public void MoveTowards(Vector2 target) {
         //Get the location of the node in relation to the current NPC (transform)
         Vector2 targetRelative = transform.InverseTransformPoint(target);
@@ -66,12 +75,19 @@ public class NPCController : MonoBehaviour
         float move = Mathf.Sign(targetRelative.x);
 
 
-        float distance = Vector2.Distance(transform.position, target);
-        Vector2 velocity = new Vector2(move * (npc.moveSpeed), 0);
+        if (collisions.above || collisions.below) {
+            velocity.y = 0;
+        }
+
+
+        float distance = Vector2.Distance(new Vector2(transform.position.x, target.y), target);
+        velocity = new Vector2(move * (npc.moveSpeed), 0);
+        velocity.y += gravity * time.deltaTime;
 
         //print("Heading to " + target + " with move of " + move);
         //print(velocity);
-        if (distance > 0.2f) {
+        print(distance);
+        if (distance > 0.1f) {
             Move(velocity);
 
         } else {
