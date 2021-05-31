@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Yarn.Unity;
 
 public class PlayerInput : MonoBehaviour
@@ -11,11 +12,14 @@ public class PlayerInput : MonoBehaviour
     private Timeline time;
 
     private bool showInventory = true;
+    public Door currentDoor;
 
     public float gravity = -10;
     public float moveSpeed = 6;
     private float moveSpeedModifier = 1f;
     Vector3 velocity;
+
+    Vector2 inputMove = Vector2.zero;
 
     private void Start() {
 
@@ -27,33 +31,47 @@ public class PlayerInput : MonoBehaviour
 
     private void Update() {
 
-        if(Input.GetKeyDown(KeyCode.LeftShift)) {
-            moveSpeedModifier = 1.5f;
-        } else if (Input.GetKeyUp(KeyCode.LeftShift)){
-            moveSpeedModifier = 1f;
-        }
 
         if(_controller.collisions.above || _controller.collisions.below) {
             velocity.y = 0;
         }
 
-        Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-
         velocity.y += gravity * time.deltaTime;
-        velocity.x = input.x * (moveSpeed * moveSpeedModifier);
+        velocity.x = inputMove.x * (moveSpeed * moveSpeedModifier);
         _controller.Move(velocity);
+    }
 
-        //Interacting with things
-        if (Input.GetKeyDown(KeyCode.E)) {
+    public void OnMove(InputAction.CallbackContext value) {
+        inputMove = value.ReadValue<Vector2>();
+    }
+
+    public void OnInteract(InputAction.CallbackContext value) {
+        if (value.performed) {
+            if (currentDoor != null) {
+                currentDoor.MoveCharacter(gameObject);
+            }
             _controller.CheckForNearbyNPC();
             _controller.CheckForNearbyInteractable();
         }
 
-        //Open Inventory
-        if (Input.GetKeyDown(KeyCode.Tab)) {
-            showInventory = !showInventory;
-
-            InventoryUI.GetComponent<UIInventory>().HideInventory(showInventory);
-        }
     }
+
+    public void OnSprint(InputAction.CallbackContext value) {
+
+        /*
+        if (Input.GetKeyDown(KeyCode.LeftShift)) {
+            moveSpeedModifier = 1.5f;
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift)) {
+            moveSpeedModifier = 1f;
+        }
+        */
+    }
+
+    public void OnInventoryOpen(InputAction.CallbackContext value) {
+        showInventory = !showInventory;
+
+        InventoryUI.GetComponent<UIInventory>().HideInventory(showInventory);
+    }
+
 }

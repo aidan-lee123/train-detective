@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Yarn.Unity;
 using Chronos;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour {
 
@@ -55,7 +56,7 @@ public class PlayerController : MonoBehaviour {
             return;
         }
                           
-        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         MouseRay(ray);
     }
 

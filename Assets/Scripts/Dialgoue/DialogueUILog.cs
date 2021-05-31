@@ -7,6 +7,7 @@ using Yarn.Unity;
 using Yarn;
 using TMPro;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 /// Displays dialogue lines to the player, and sends
 /// user choices back to the dialogue system.
@@ -268,7 +269,7 @@ public class DialogueUILog : DialogueUIBehaviour {
             continuePrompt.SetActive(true);
 
         // Wait for any user input
-        while (Input.anyKeyDown == false) {
+        while (Keyboard.current.anyKey.isPressed == false) {
             speed = 1000;
             yield return null;
         }

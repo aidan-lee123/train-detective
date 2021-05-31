@@ -21,24 +21,31 @@ public class Door : MonoBehaviour
     */
 
     private void Update() {
+        /*
         if (Input.GetKeyDown(KeyCode.E)) {
             foreach(GameObject actor in _actors) {
                 if(actor.layer == 9) {
                     MoveCharacter(actor);
                 }
             }
-        }
+        }*/
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
         DisplayArrow();
         _actors.Add(collision.gameObject);
+        if(collision.gameObject.name == "Player" && collision.gameObject.GetComponent<PlayerInput>().currentDoor != this) {
+            collision.gameObject.GetComponent<PlayerInput>().currentDoor = this;
+        }
         //Debug.Log(collision.gameObject.name + " entered " + gameObject.name);
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
         HideArrow();
         _actors.Remove(collision.gameObject);
+        if (collision.gameObject.name == "Player" && collision.gameObject.GetComponent<PlayerInput>().currentDoor == this) {
+            collision.gameObject.GetComponent<PlayerInput>().currentDoor = null;
+        }
         //ebug.Log(collision.gameObject.name + " left " + gameObject.name);
     }
 

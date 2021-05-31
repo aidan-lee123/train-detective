@@ -86,7 +86,7 @@ public class NPCController : MonoBehaviour
 
         //print("Heading to " + target + " with move of " + move);
         //print(velocity);
-        print(distance);
+        //print(distance);
         if (distance > 0.1f) {
             Move(velocity);
 
