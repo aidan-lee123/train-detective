@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Item
 {
     public int id;
@@ -22,4 +23,9 @@ public class Item
         this.description = item.description;
         this.icon = Resources.Load<Sprite>("Sprites/Items/" + item.title);
     }
+}
+
+[System.Serializable]
+public class Items {
+    public Item[] items;
 }

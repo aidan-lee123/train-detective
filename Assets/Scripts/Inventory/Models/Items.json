@@ -1,5 +1,5 @@
 {
-    itemList: 
+    "items": 
     [
         {
             "id": 0,
@@ -8,7 +8,7 @@
         },
         {
             "id": 1,
-            "title": "Test 2",
+            "title": "Test2",
             "description": "Yo this Test 2"
         }
     ]

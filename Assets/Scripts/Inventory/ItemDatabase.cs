@@ -6,7 +6,7 @@ public class ItemDatabase : MonoBehaviour
 {
     public List<Item> items = new List<Item>();
 
-    public TextAsset itemListText;
+    public TextAsset[] itemFiles;
 
     private void Awake() {
         BuildDatabase();
@@ -23,10 +23,14 @@ public class ItemDatabase : MonoBehaviour
 
     void BuildDatabase() {
 
-        items = new List<Item> {
-            new Item(0, "Test", "This is a test"),
-            new Item(1, "Test2", "Test2")
-        };
+        foreach(TextAsset file in itemFiles) {
+            Items itemsInFile = JsonUtility.FromJson<Items>(file.text);
+
+            foreach(Item item in itemsInFile.items) {
+                item.icon = Resources.Load<Sprite>("Sprites/Items/" + item.title);
+                items.Add(item);
+            }
+        }
         
     }
 }

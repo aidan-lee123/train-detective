@@ -12,7 +12,7 @@ public class InventoryManager : MonoBehaviour
     void Start()
     {
         GiveItem("Test");
-        GiveItem("Test");
+        GiveItem("Test2");
     }
 
     public void GiveItem(int id) {

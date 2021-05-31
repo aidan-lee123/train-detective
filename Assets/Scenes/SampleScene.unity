@@ -5341,6 +5341,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 2048
+  gravity: -10
   horizontalRayCount: 4
   verticalRayCount: 4
 --- !u!1 &834998425
@@ -5602,7 +5603,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c63d1afc110da9940adef2a3b4050eec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemListText: {fileID: 4900000, guid: 3355689e73a074541b1ff609599c692c, type: 3}
+  items: []
+  itemFiles:
+  - {fileID: 4900000, guid: 3355689e73a074541b1ff609599c692c, type: 3}
 --- !u!4 &854201148
 Transform:
   m_ObjectHideFlags: 0
@@ -6207,6 +6210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 911e3db10428ab8419a7f78c2d61dc70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterItems: []
   itemDatabase: {fileID: 854201147}
   inventoryUI: {fileID: 2118047087}
 --- !u!114 &898853917
