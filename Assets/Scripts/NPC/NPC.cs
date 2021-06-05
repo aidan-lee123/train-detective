@@ -45,7 +45,7 @@ public class NPC : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         controller = GetComponent<NPCController>();
         Physics2D.IgnoreLayerCollision(9, 10);
-        NPCManager.Instance.AddNPC(this);
+
 
         InitializeStateMachine();
 
@@ -54,6 +54,10 @@ public class NPC : MonoBehaviour
             DialogueRunner.AddScript(scriptToLoad);
         }
         
+    }
+
+    private void Start() {
+        NPCManager.Instance.AddNPC(this);
     }
 
     private void Update() {

@@ -3,12 +3,14 @@
     [
         {
             "id": 0,
+            "name": "test",
             "title": "Test",
             "description": "Yo this is a test"
         },
         {
             "id": 1,
-            "title": "Test2",
+            "name": "test_2",
+            "title": "Test 2",
             "description": "Yo this Test 2"
         }
     ]

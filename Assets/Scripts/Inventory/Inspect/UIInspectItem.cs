@@ -23,12 +23,15 @@ public class UIInspectItem : MonoBehaviour
     }
 
     public void SetItem(Item item) {
-        itemSprite = item.icon;
+        if(item != null) {
+            itemSprite = item.icon;
 
-        itemImage.sprite = itemSprite;
-        itemDesc.text = item.description;
+            itemImage.sprite = itemSprite;
+            itemDesc.text = item.description;
 
-        Hide(false);
+            Hide(false);
+        }
+
     }
 
     public void Hide(bool state) {

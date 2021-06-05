@@ -11,7 +11,8 @@ public class DebugController : MonoBehaviour
 
     public static DebugCommand KILL_ALL;
     public static DebugCommand HELP;
-    public static DebugCommand<int> SET_MONEY;
+    public static DebugCommand<float> SET_MONEY;
+    public static DebugCommand<float> ADD_MONEY;
 
     public List<object> commandList;
 
@@ -32,8 +33,12 @@ public class DebugController : MonoBehaviour
             NPCManager.Instance.KillAllNPCs();
         });
 
-        SET_MONEY = new DebugCommand<int>("set_money", "Sets the amount of money", "set_money <money_amount>", (x) => {
+        SET_MONEY = new DebugCommand<float>("set_money", "Sets the amount of money", "set_money <money_amount>", (x) => {
+            Player.Instance.SetMoney(x);
+        });
 
+        ADD_MONEY = new DebugCommand<float>("add_money", "Adds an amout of money to the player", "add_money <amount>", (x) => {
+            Player.Instance.AddMoney(x);
         });
 
         HELP = new DebugCommand("help", "Shows a list of Commands", "help", () => {
@@ -43,6 +48,7 @@ public class DebugController : MonoBehaviour
         commandList = new List<object> {
             KILL_ALL,
             SET_MONEY,
+            ADD_MONEY,
             HELP,
         };
     }
@@ -100,6 +106,9 @@ public class DebugController : MonoBehaviour
                 }
                 else if (commandList[i] as DebugCommand<int> != null) {
                     (commandList[i] as DebugCommand<int>).Invoke(int.Parse(properties[1]));
+                }
+                else if (commandList[i] as DebugCommand<float> != null) {
+                    (commandList[i] as DebugCommand<float>).Invoke(float.Parse(properties[1]));
                 }
             }
         }

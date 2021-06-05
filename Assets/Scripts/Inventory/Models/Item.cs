@@ -6,12 +6,14 @@ using UnityEngine;
 public class Item
 {
     public int id;
+    public string name;
     public string title;
     public string description;
     public Sprite icon;
 
-    public Item(int id, string title, string description) {
+    public Item(int id, string name, string title, string description) {
         this.id = id;
+        this.name = name;
         this.title = title;
         this.description = description;
         this.icon = Resources.Load<Sprite>("Sprites/Items/" + title);
@@ -19,6 +21,7 @@ public class Item
 
     public Item(Item item) {
         this.id = item.id;
+        this.name = item.name;
         this.title = item.title;
         this.description = item.description;
         this.icon = Resources.Load<Sprite>("Sprites/Items/" + item.title);

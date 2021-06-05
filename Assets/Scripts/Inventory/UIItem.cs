@@ -51,7 +51,10 @@ public class UIItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
         if(item != null) {
             //itemTitle.HideText(true);
             TooltipSystem.Hide();
+
         }
+
+
 
     }
 
