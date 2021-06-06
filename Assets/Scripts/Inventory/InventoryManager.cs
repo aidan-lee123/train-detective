@@ -11,8 +11,8 @@ public class InventoryManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GiveItem("Test");
-        GiveItem("Test2");
+        GiveItem("test");
+        GiveItem("test_2");
     }
 
     public void GiveItem(int id) {

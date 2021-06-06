@@ -27,7 +27,7 @@ public class ItemDatabase : MonoBehaviour
             Items itemsInFile = JsonUtility.FromJson<Items>(file.text);
 
             foreach(Item item in itemsInFile.items) {
-                item.icon = Resources.Load<Sprite>("Sprites/Items/" + item.title);
+                item.icon = Resources.Load<Sprite>("Sprites/Items/" + item.name);
                 items.Add(item);
             }
         }
