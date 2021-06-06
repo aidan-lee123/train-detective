@@ -58,6 +58,12 @@ public class PlayerInput : MonoBehaviour
 
     public void OnSprint(InputAction.CallbackContext value) {
 
+        if (value.performed) {
+            moveSpeedModifier = 1.5f;
+        }
+        if (value.canceled) {
+            moveSpeedModifier = 1f;
+        }
         /*
         if (Input.GetKeyDown(KeyCode.LeftShift)) {
             moveSpeedModifier = 1.5f;
