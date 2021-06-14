@@ -26,18 +26,28 @@ public class Schedule {
 public class Activity {
 
     public Vector2 location;
-    public float duration;
     public TimeSlot time;
     public Action action;
 
-    public Activity(Vector2 _location, float _duration, TimeSlot _time, Action _action) {
+    public Activity(Vector2 _location, float _startTime, float _duration, Action _action) {
         location = _location;
-        duration = _duration;
-        time = _time;
+        time = new TimeSlot(_startTime, _duration);
         action = _action;
+    }
+
+    public void PerformAction() {
+        action.Invoke();
     }
 }
 
 public class TimeSlot {
 
+
+    public float startTime;
+    public float duration;
+
+    public TimeSlot(float _startTime, float _duration) {
+        startTime = _startTime;
+        duration = _duration;
+    }
 }
