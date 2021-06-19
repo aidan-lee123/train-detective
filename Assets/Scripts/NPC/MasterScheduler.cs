@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Scheduler : MonoBehaviour
+public class MasterScheduler : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -16,11 +16,11 @@ public class Scheduler : MonoBehaviour
     {
         
     }
-}
 
-public class Schedule {
+    List<Schedule> BuildSchedule() {
 
-
+        return null;
+    }
 }
 
 public class Activity {
@@ -37,6 +37,11 @@ public class Activity {
 
     public void PerformAction() {
         action.Invoke();
+    }
+
+    public bool Finished() {
+
+        return false;
     }
 }
 
